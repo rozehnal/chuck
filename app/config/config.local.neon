@@ -1,7 +1,7 @@
 #
 parameters:
 
-    cdnUrl: http://common.cdn.dev.hml.dixonsretail.net/chuck/
+    cdnUrl: /
 
     projects:
         fo-currys:
