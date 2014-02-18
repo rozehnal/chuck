@@ -1,0 +1,20 @@
+<p>Hi all,<br>
+I’m seding a release notes about <b>{$projectName}</b> for you.
+</p>
+
+<ul style="list-style-type:none">
+{foreach $log as $entry}
+    <li>
+        {if isset($entry['ticket']) && !empty($entry['ticket'])}
+        [<a href="{$jiraPath}browse/{$entry['ticket']}" target="_blank">{$entry['ticket']}</a>]
+        {/if}
+        {!$entry['message']}
+    </li>
+{/foreach}
+</ul>
+
+
+Best regards,<br>
+<br>
+Chuck NORRIS<br>
+The Chief eXport Officer

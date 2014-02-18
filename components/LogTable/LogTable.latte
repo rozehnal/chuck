@@ -1,0 +1,48 @@
+<table class="table table-bordered table-striped table-condensed form-inline" style="margin: auto;" id="">
+    <thead>
+    <tr>
+        {if in_array('revision', $selectedColumns)}
+        <th width="80">
+            <input type="checkbox" id="checkAll" style="float:left;" />&nbsp;Revision
+        </th>
+        {/if}
+        {if in_array('author', $selectedColumns)}
+        <th width="70">Author</th>
+        {/if}
+        {if in_array('date', $selectedColumns)}
+        <th width="130">Date</th>
+        {/if}
+        {if in_array('message', $selectedColumns)}
+        <th>Message</th>
+        {/if}
+    </tr>
+    </thead>
+    {foreach $log as $revision => $entry}
+    <tr>
+        {if in_array('revision', $selectedColumns)}
+        <td>
+            <input type="checkbox" name="log[]" value="{$entry['revision']}" id="rev{$entry['revision']}" {if in_array((int) $entry['revision'], $selectedLogs)}checked="checked"{/if}  />
+            <label for="rev{$entry['revision']}">{$entry['revision']}</label>
+        </td>
+        {/if}
+        {if in_array('author', $selectedColumns)}
+        <td>{$entry['author']}</td>
+        {/if}
+        {if in_array('date', $selectedColumns)}
+        <td>{substr($entry['date'], 0, 19)}</td>
+        {/if}
+        {if in_array('message', $selectedColumns)}
+        <td>
+            {if isset($entry['type']) && !empty($entry['type'])}
+            [{$entry['type']}]
+            {/if}
+            {if isset($entry['ticket']) && !empty($entry['ticket'])}
+            [<a href="{$jiraPath}browse/{$entry['ticket']}">{$entry['ticket']}</a>]
+            {/if}
+
+            {!$entry['message']|nl2br}
+        </td>
+        {/if}
+    </tr>
+    {/foreach}
+</table>

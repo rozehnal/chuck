@@ -1,0 +1,31 @@
+{extends ../projectBase.latte}
+
+{block #projectContent}
+    <h1>Project: {$projectName}</h1>
+    {include #menu}
+
+{foreach $flashes as $flash}
+<div class="flash {$flash->type}">{$flash->message}</div>
+{/foreach}
+
+    <h2>Info:</h2>
+
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>URL:</strong></th>
+            <td>{$url}</td>
+        </tr>
+        <tr>
+            <th><strong>Repository:</strong></th>
+            <td>{$repository}</td>
+        </tr>
+    </table>
+
+    <div class="btn-group">
+        <button class="btn btn-large btn-primary dropdown-toggle" data-toggle="dropdown">Actions <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+            <li><a href="{plink repositoryUpdate!}">Update</a></li>
+            <li><a href="{plink Tag:createTag}">Create tag</a></li>
+        </ul>
+    </div>
+

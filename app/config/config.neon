@@ -1,0 +1,37 @@
+common:
+    php:
+        date.timezone: Europe/London
+
+    parameters:
+        jiraApiPath: http://jira.dixons.co.uk/rest/api/latest/
+        jiraPath: http://jira.dixons.co.uk/
+        svnUrl: https://svn.dixonsretail.net
+
+    services:
+        svnHelper:
+            class: SvnHelper
+            arguments: [%tempDir%, %svnCredentials%, %projects%]
+            run: true
+        jiraHelper:
+            class: JiraWrapper
+            arguments: [%jiraApiPath%, %jiraCredentials%]
+        logGenerator:
+            class: LogGenerator
+            arguments: [@jiraHelper]
+        mailHelper:
+            class: MailHelper
+
+    includes:
+        - secret.neon
+
+production < common:
+    includes:
+        - config.jenkins.neon
+
+dixdev < common:
+    includes:
+        - config.dixdev.neon
+
+development < common:
+    includes:
+        - config.local.neon

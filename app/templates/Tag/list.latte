@@ -1,0 +1,72 @@
+{extends ../projectBase.latte}
+
+{block #projectContent}
+    <h1>Project: {$projectName}</h1>
+    {include #menu}
+
+    {foreach $flashes as $flash}
+        <div class="alert alert-{$flash->type}">{$flash->message}</div>
+    {/foreach}
+
+    {if true == $logTpl}
+        <h2>Confluence Log</h2>
+        <div class="alert alert-block">
+        Use "Insert -&gt; Wiki Markup (Ctrl+Shift+D)" in Confluence editor
+        </div>
+        <div class="well">
+            {$logTpl}
+        </div>
+    {/if}
+
+    <form action="{link Tag:list}" method="get">
+        <div class="row">
+            <div class="span4">
+                <h2>Tags</h2>
+            </div>
+            <div class="span6 offset6" style="text-align:right; ">
+                <input type="text" class="form-control" name="toReleaseNote" value="{$mailTo}" />
+                <input type="submit" class="btn btn-success" name="sendReleaseNote" value="Send release note" />
+                <input type="submit" class="btn btn-success" name="confluenceLog" value="Generate changelog" />
+            </div>
+        </div>
+
+        <input type="hidden" name="project" value="{$project}" />
+        <input type="hidden" name="action" value="{$presenter->getAction()}" />
+        <input type="hidden" name="presenter" value="{$presenter->getName()}" />
+
+        <table class="table table-bordered table-striped table-condensed" style="margin: auto;">
+            <thead>
+            <tr>
+            	<th></th>
+                <th>Tag name</th>
+                <th>URL</th>
+                <th>Tools</th>
+            </tr>
+            </thead>
+            {foreach $tags as $tag}
+            <tr id="{$tag['name']}">
+                <td>
+                	<input type="checkbox" name="tag[]" value="{$tag['name']}" {if in_array($tag['name'], $selectedTags)}checked="checked"{/if}>
+                </td>
+                <td>
+
+                    <a href="#{$tag['name']}"><i class="icon-chevron-right"></i></a>
+                    {$tag['name']}
+                </td>
+                <td>
+                    {$projectRoot}/tags/{$tag['name']}
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <button class="btn btn-primary btn-info dropdown-toggle" data-toggle="dropdown">Action <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li><a n:href="compareWithTrunk $tag['name']">Compare log with trunk</a></li>
+                            <li class="divider"></li>
+                            <li><a n:href="deployUAT $tag['name']">Deploy to UAT</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            {/foreach}
+        </table>
+    </form>

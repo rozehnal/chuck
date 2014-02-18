@@ -1,0 +1,16 @@
+{extends ../projectBase.latte}
+
+{block #projectContent}
+    <h1>Project: {$projectName}</h1>
+    {include #menu}
+
+    <div class="row-fluid">
+        <div class="span6">
+            <h2>Trunk</h2>
+            {control trunkTable}
+        </div>
+        <div class="span6">
+            <h2>Tag: {$tag}</h2>
+            {control tagTable}
+        </div>
+    </div>

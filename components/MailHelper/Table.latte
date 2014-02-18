@@ -1,0 +1,42 @@
+<p>Hi all,<br>
+I’m seding a release notes about <b>{$projectName}</b> for you.
+</p>
+<table style="font-size:10pt;line-height:13pt;color:rgb(51,51,51);border:0px;margin:0px 0px 10px;padding:0px;clear:left;border-collapse:collapse">
+  <thead>
+    <tr style="font-size:10pt;line-height:13pt">
+      <th style="margin:0px;padding:5px 15px 5px 7px;text-align:center;vertical-align:top;font-size:10pt;line-height:13pt;border:1px solid rgb(221,221,221);min-width:0.6em;background-color:rgb(240,240,240);color:rgb(0,51,102)">
+        <div style="margin-top:0px;margin-bottom:0px">
+          <div style="font-size:10pt;line-height:13pt;color:rgb(51,51,51);background-color:transparent;padding:0px;margin-bottom:0px;margin-top:0.2px">
+Jira</div>
+        </div>
+      </th>
+      <th style="margin:0px;padding:5px 15px 5px 7px;text-align:center;vertical-align:top;font-size:10pt;line-height:13pt;border:1px solid rgb(221,221,221);min-width:0.6em;background-color:rgb(240,240,240);color:rgb(0,51,102)">
+        <div style="margin-top:0px;margin-bottom:0px">
+          <div style="font-size:10pt;line-height:13pt;color:rgb(51,51,51);background-color:transparent;padding:0px;margin-bottom:0px;margin-top:0.2px">
+Description</div>
+        </div>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+{foreach $log as $entry}
+    <tr style="font-size:10pt;line-height:13pt">
+      <td colspan="1" style="font-size:10pt;line-height:13pt;margin:0px;padding:5px 7px;text-align:left;vertical-align:top;border:1px solid rgb(221,221,221);min-width:0.6em">
+        {if isset($entry['ticket']) && !empty($entry['ticket'])}
+        <span style="background-color:rgb(240,240,240);border:1px solid rgb(204,204,204);padding:2px 4px;margin:0px;display:inline-block;min-width:100px;min-height:16px">
+          [<a href="{$jiraPath}browse/{$entry['ticket']}" target="_blank">{$entry['ticket']}</a>]
+        </span>
+        {/if}
+      </td>
+      <td colspan="1" style="font-size:10pt;line-height:13pt;margin:0px;padding:5px 7px;text-align:left;vertical-align:top;border:1px solid rgb(221,221,221);min-width:0.6em">
+          {!$entry['message']|nl2br}
+      </td>
+    </tr>
+{/foreach}
+  </tbody>
+</table>
+
+Best regards,<br>
+<br>
+Chuck NORRIS<br>
+The Chief eXport Officer

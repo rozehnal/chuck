@@ -1,0 +1,17 @@
+{layout @layout.latte}
+
+{define #menu}
+<div class="subnav">
+    <ul class="nav nav-pills">
+        {foreach $projectMenu as $link=>$label}
+        <li n:class="$presenter->isLinkCurrent($link) ? active">
+            <a href="{plink $link $project}">{$label}</a>
+        </li>
+        {/foreach}
+    </ul>
+</div>
+{/define}
+
+{block #content}
+	{include #projectContent}
+{/block}

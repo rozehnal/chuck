@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>SVN stats</title>
+
+    <link rel="shortcut icon" href="{$cdnUrl}/favicon.ico"/>
+
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    <style type="text/css">
+        #chuck { position:fixed; bottom: 0; right: 0; z-index: 0; width: 200px; margin-right: -10px; }
+
+        h3.popover-title { display: none !important; }
+        .container { padding-top: 10px;  }
+        div.well.row { margin-left: 0px; }
+    </style>
+</head>
+
+<body >
+    <div class="container">
+        <div class="well row">
+            <div class="span7">
+                <h1>Chuck</h1>
+                <h3>The best tool since MacGyver!</h3>
+            </div>
+            <div class="span4">
+                {form projectForm}
+                    {input 'project'}
+                    {input 'submitButton'}
+                {/form}
+            </div>
+        </div>
+        {include #content}
+    </div>
+
+    <img src="{$baseUri}/img/chuck.png" id="chuck" />
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+
+    <script src="{$cdnUrl}/js/chuckFacts.js"></script>
+    <script type="text/javascript">
+        $('#chuck').popover({
+            trigger: 'hover',
+            placement: 'left',
+            content: randQuote
+        });
+
+        $('#checkAll').change(function () {
+            if($(this).is(':checked')) {
+                $('table.table input[type=checkbox]').each(function () {
+                    $(this).attr('checked', true);
+                });
+            }
+            else {
+                $('table.table input[type=checkbox]').each(function () {
+                    $(this).attr('checked', false);
+                });
+            }
+        });
+		
+		
+		// ajax ticket description load
+/*
+		var ticketSummary = $('.ticketSummary');
+		
+		if(ticketSummary.length > 0) {
+			ticketSummary.each(function () {
+				var ticket = $(this).data('ticket');
+				
+				console.log(ticket);
+				var apiUrl = 'https://jira.e-merchant.com/rest/api/latest/issue/'+ticket+'&jsonp-callback=?';
+				console.log(apiUrl);
+				$.getJSON(apiUrl, function (data, textStatus, jqxhr) {
+					console.log(data);
+				});
+				
+			});
+		}
+*/
+    </script>
+</body>
+</html>
