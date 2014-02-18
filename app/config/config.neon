@@ -10,11 +10,11 @@ common:
     services:
         svnHelper:
             class: SvnHelper
-            arguments: [%tempDir%, %svnCredentials%, %projects%]
+            arguments: [%tempDir%, %svn.credentials%, %projects%]
             run: true
         jiraHelper:
             class: JiraWrapper
-            arguments: [%jiraApiPath%, %jiraCredentials%]
+            arguments: [%jiraApiPath%, %jira.credentials%]
         logGenerator:
             class: LogGenerator
             arguments: [@jiraHelper]
@@ -24,7 +24,7 @@ common:
     includes:
         - secret.neon
 
-production < common:
+jenkins < common:
     includes:
         - config.jenkins.neon
 
@@ -35,3 +35,5 @@ dixdev < common:
 development < common:
     includes:
         - config.local.neon
+
+production < common:

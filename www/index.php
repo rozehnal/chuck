@@ -4,8 +4,6 @@ use Nette\Diagnostics\Debugger,
 	Nette\Application\Routers\Route,
 	Nette\Application\Routers\SimpleRouter;
 
-;
-
 define('ROOT_DIR', realpath(__DIR__ . '/../'));
 define('WWW_DIR', __DIR__);
 define('APP_DIR', ROOT_DIR . '/app');
@@ -28,12 +26,14 @@ $configurator->createRobotLoader()
 	->register();
 
 // basic environment resolution
-$environment = "development";
+$environment = null;
+
+// specific configuration for Dixons machines
 if(false !== getenv('EM_ENV')) { // on DEV EM_ENV is set
 	$environment = "dixdev";
 }
 else if(false !== strstr($_SERVER["SERVER_SOFTWARE"], "nginx")){ // jenkins server runs on nginx
-	$environment = "production";
+	$environment = "jenkins";
 	$configurator->setDebugMode(FALSE);
 	\Nette\Diagnostics\Debugger::enable(Debugger::PRODUCTION);
 }
@@ -42,9 +42,7 @@ $configurator->addConfig(ROOT_DIR . '/app/config/config.neon', $environment);
 $container = $configurator->createContainer();
 $container->application->catchExceptions = FALSE;
 
-
 $router = $container->application->getRouter();
-
 $router[] = new SimpleRouter('Dashboard:default');
 
 // Run the application!
