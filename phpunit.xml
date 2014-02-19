@@ -10,7 +10,7 @@
         >
     <testsuites>
         <testsuite name="Components tests">
-            <directory>components/*/Tests/</directory>
+            <directory>./components/*</directory>
         </testsuite>
     </testsuites>
 </phpunit>

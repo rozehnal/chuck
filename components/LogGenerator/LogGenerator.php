@@ -95,16 +95,27 @@ class LogGenerator extends \Nette\Application\UI\Control
 		return $ticketLog;
 	}
 
-
+	/**
+	 * Orders that RFCs are 1st, bugfixes 2nd, support 3rd and the rest below
+	 *
+	 * @param  array $issues
+	 * @return array
+	 */
 	private function orderByIssueType($issues)
 	{
-		//trigger_error("Sorting not implemented!", E_USER_NOTICE);
+		trigger_error("Sorting not implemented!", E_USER_NOTICE);
 		return $issues;
 	}
 
+	/**
+	 * P1 at the top, then P2, .....
+	 *
+	 * @param $issues
+	 * @return mixed
+	 */
 	private function orderByPriority($issues)
 	{
-		//trigger_error("Sorting not implemented!", E_USER_NOTICE);
+		trigger_error("Sorting not implemented!", E_USER_NOTICE);
 		return $issues;
 	}
 
