@@ -21,21 +21,34 @@ class LogGenerator extends \Nette\Application\UI\Control
 
 	/**
 	 * @param array $revisions
+	 * @param  string $orderBy
 	 * @return array
 	 */
-	public function generateTicketLog($revisions)
+	public function generateTicketLog($revisions, $orderBy = self::ORDER_ISSUETYPE)
 	{
-		return $this->getTicketInformation($revisions);
+		$log = $this->getTicketInformation($revisions);
+
+		switch($orderBy) {
+			case self::ORDER_PRIORITY:
+				$log['ALL'] = $this->orderByPriority($log['ALL']);
+				break;
+
+			case self::ORDER_ISSUETYPE:
+			default:
+				$log['ALL'] = $this->orderByIssueType($log['ALL']);
+				break;
+		}
+
+		return $log;
 	}
 
 	/**
 	 * Gets the array with all necessary information about tickets
 	 *
 	 * @param  array  $logList
-	 * @param  string $orderBy
 	 * @return array
 	 */
-	protected function getTicketInformation($logList, $orderBy = self::ORDER_ISSUETYPE)
+	protected function getTicketInformation($logList)
 	{
 		$ticketLog = array();
 		foreach ($logList as $logLine) {
@@ -68,22 +81,15 @@ class LogGenerator extends \Nette\Application\UI\Control
 					}
 					$ticketLog['ALL'][$data['ticket']] = $data;
 				}
+				else if (isset($data['ticket']) && !empty($data['ticket'])) {
+					$ticketLog['OTHER'][$data['ticket']] = $data;
+					$ticketLog['ALL'][$data['ticket']] = $data;
+				}
 				else {
 					$ticketLog['OTHER'][] = $data;
 					$ticketLog['ALL'][] = $data;
 				}
 			}
-		}
-
-		switch($orderBy) {
-			case self::ORDER_PRIORITY:
-				$ticketLog['ALL'] = $this->orderByPriority($ticketLog['ALL']);
-				break;
-
-			case self::ORDER_ISSUETYPE:
-			default:
-				$ticketLog['ALL'] = $this->orderByIssueType($ticketLog['ALL']);
-				break;
 		}
 
 		return $ticketLog;
@@ -92,7 +98,7 @@ class LogGenerator extends \Nette\Application\UI\Control
 
 	private function orderByIssueType($issues)
 	{
-		trigger_error("Sorting not implemented!", E_USER_NOTICE);
+		//trigger_error("Sorting not implemented!", E_USER_NOTICE);
 		return $issues;
 	}
 

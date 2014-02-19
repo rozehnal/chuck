@@ -1,10 +1,15 @@
 {
-    "name": "m.svec/chuck",
-    "require": {
-        "nette/nette": "2.0.*",
-        "kdyby/curl": "@stable"
-    },
+	"name": "m.svec/chuck",
+	"require": {
+		"nette/nette": "2.0.*",
+		"kdyby/curl": "@stable"
+	},
 	"require-dev": {
-		"behat/behat": "@stable"
+		"behat/behat": "@stable",
+		"behat/mink-extension": "@stable",
+		"phpunit/phpunit": "3.7.*"
+	},
+	"autoload": {
+		"classmap": ["app/", "components/"]
 	}
 }
