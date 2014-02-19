@@ -66,6 +66,9 @@ class SvnHelperTest extends PHPUnit_Framework_TestCase {
 
 	}
 
+	/**
+	 * @expectedException PHPUnit_Framework_Error_Notice
+	 */
 	public function testGenerateTicketLog_correctData()
 	{
 		$generator = new LogGenerator($this->getJiraMock());
@@ -79,7 +82,9 @@ class SvnHelperTest extends PHPUnit_Framework_TestCase {
 		$this->assertCount(3, $ticketLog['OTHER']);
 	}
 
-
+	/**
+	 * @expectedException PHPUnit_Framework_Error_Notice
+	 */
 	public function testGenerateTicketLog_issueType_RFC()
 	{
 		$ticketInfo =  array(
@@ -97,6 +102,9 @@ class SvnHelperTest extends PHPUnit_Framework_TestCase {
 		$this->assertCount(1, $ticketLog['RFC']);
 	}
 
+	/**
+	 * @expectedException PHPUnit_Framework_Error_Notice
+	 */
 	public function testGenerateTicketLog_issueType_Bug()
 	{
 		$ticketInfo =  array(
@@ -114,6 +122,9 @@ class SvnHelperTest extends PHPUnit_Framework_TestCase {
 		$this->assertCount(1, $ticketLog['RFC']);
 	}
 
+	/**
+	 * @expectedException PHPUnit_Framework_Error_Notice
+	 */
 	public function testGenerateTicketLog_issueType_Support()
 	{
 		$ticketInfo =  array(
