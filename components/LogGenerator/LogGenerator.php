@@ -102,6 +102,12 @@ class LogGenerator extends \Nette\Application\UI\Control
 		return $issues;
 	}
 
+	private function orderByPriority($issues)
+	{
+		//trigger_error("Sorting not implemented!", E_USER_NOTICE);
+		return $issues;
+	}
+
 
 	/**
 	 * @param $message
