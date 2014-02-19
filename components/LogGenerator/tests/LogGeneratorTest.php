@@ -3,10 +3,10 @@
 class SvnHelperTest extends PHPUnit_Framework_TestCase {
 
 	/**
-	 * @param  string $returnValue
+	 * @param  array $returnValue
 	 * @return JiraWrapper
 	 */
-	private function  getJiraMock($returnValue = 'foo')
+	private function  getJiraMock($returnValue = array())
 	{
 		$mock = $this->getMockBuilder('JiraWrapper')
 			->disableOriginalConstructor()
