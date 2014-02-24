@@ -4,10 +4,6 @@
     <h1>Project: {$projectName}</h1>
     {include #menu}
 
-    {foreach $flashes as $flash}
-        <div class="alert alert-{$flash->type}">{$flash->message}</div>
-    {/foreach}
-
     {if true == $logTpl}
         <h2>Confluence Log</h2>
         <div class="alert alert-block">
@@ -18,17 +14,14 @@
         </div>
     {/if}
 
+    {foreach $flashes as $flash}
+        <div class="alert alert-{$flash->type}">{$flash->message}</div>
+    {/foreach}
+
     <form action="{link Tag:list}" method="get">
-        <div class="row">
-            <div class="span4">
-                <h2>Tags</h2>
-            </div>
-            <div class="span6 offset6" style="text-align:right; ">
-                <input type="text" class="form-control" name="toReleaseNote" value="{$mailTo}" />
-                <input type="submit" class="btn btn-success" name="sendReleaseNote" value="Send release note" />
-                <input type="submit" class="btn btn-success" name="confluenceLog" value="Generate changelog" />
-            </div>
-        </div>
+        <input type="text" class="form-control span8" name="toReleaseNote" value="{$mailTo}" placeholder="E-mail addresses separated by semicolon" />
+        <input type="submit" class="btn btn-info span2" name="sendReleaseNote" value="Send release note" onClick="javascript:return confirm('Are you sure you want to send release note?')" />
+        <input type="submit" class="btn btn-success span2" name="confluenceLog" value="Generate Wiki log" />
 
         <input type="hidden" name="project" value="{$project}" />
         <input type="hidden" name="action" value="{$presenter->getAction()}" />
