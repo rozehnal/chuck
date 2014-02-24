@@ -9,17 +9,27 @@ common:
 
     services:
         svnHelper:
-            class: SvnHelper
+            class: SvnHelper            
             arguments: [%tempDir%, %svn.credentials%, %projects%]
             run: true
         jiraHelper:
-            class: JiraWrapper
-            arguments: [%jiraApiPath%, %jira.credentials%]
+            class: JiraWrapper            
         logGenerator:
             class: LogGenerator
             arguments: [@jiraHelper]
         mailHelper:
             class: MailHelper
+        jiraIssuesRepository:
+            class: JiraIssuesRepository
+        jiraRequestsFactory:
+            class: JiraRequestsFactory
+        jiraClient:
+            class: JiraClient
+        singleIssueTransformer:
+            class: SingleIssueTransformer
+        jiraConfiguration:
+            class: JiraConfiguration
+            arguments: [%jiraApiPath%, %jira.credentials%]            
 
     includes:
         - secret.neon

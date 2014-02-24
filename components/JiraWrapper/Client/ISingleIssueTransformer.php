@@ -3,7 +3,7 @@
 interface ISingleIssueTransformer extends IJiraResponseTransformer
 {
     /**
-     * @reutrn JiraIssue
+     * @return JiraIssue
      */
     function createFromRawData($data);
 }

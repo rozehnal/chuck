@@ -7,24 +7,8 @@ class JiraIssuesRepositoryTest extends PHPUnit_Framework_TestCase
      * @test
      */
     public function findByKey_ExistingIssuesKey_ReturnsThatIssue()
-    {
-        $reportedDate = new DateTime('2000-01-01');
-        $createdDate = new DateTime('2000-01-02');        
-        $updatedDate = new DateTime('2000-01-03');        
-        $expectedIssue = new JiraIssue('existing_key', 
-                                        'summary', 
-                                        'asigneeName', 
-                                        'asigneeDisplayName', 
-                                        $reportedDate, 
-                                        $createdDate, 
-                                        $updatedDate, 
-                                        'description', 
-                                        'priority', 
-                                        'priorityIcon', 
-                                        'status', 
-                                        'statusIcon', 
-                                        'typeName', 
-                                        'typeIcon');
+    {            
+        $expectedIssue = $this->getMock('IJiraIssue');
         
         $request = $this->getMock('IJiraRequest');
         $requestFactory = $this->getMock('IJiraRequestsFactory');

@@ -1,6 +1,6 @@
 <?php
 
-class JiraIssue
+class JiraIssue implements IJiraIssue
 {
     protected $key;
     
@@ -60,4 +60,31 @@ class JiraIssue
         $this->typeName = $typeName;
         $this->updated = $updated;
     }
+
+    /**
+     * 
+     * @return mixed[]
+     */
+    public function toArray()
+    {
+        return array(
+            'key'          => $this->key,
+            'summary'      => $this->summary,
+            'assignee' => array(
+                    'name' => $this->asigneeName,
+                    'displayName' => $this->asigneeDisplayName
+            ),
+            'reporter'     => $this->reporter,
+            'created'      => $this->created,
+            'updated'      => $this->updated,
+            'description'  => $this->description,
+            'priority'     => $this->priority,
+            'priorityIcon' => $this->priorityIcon,
+            'status'       => $this->status,
+            'statusIcon'   => $this->statusIcon,
+            'typeName'     => $this->typeName,
+            'typeIcon'     => $this->typeIcon,
+        );
+    }
+
 }
