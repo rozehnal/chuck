@@ -11,13 +11,20 @@ class LogGenerator extends \Nette\Application\UI\Control
     const ORDER_ISSUETYPE = 'type';
 
     private $jiraHelper;
+    
+    /**
+     *
+     * @var IRevisionMessageParser
+     */
+    private $revisionMessageParser;
 
     /**
      * @param JiraWrapper $jiraHelper
      */
-    function __construct(JiraWrapper $jiraHelper)
+    function __construct(JiraWrapper $jiraHelper, IRevisionMessageParser $messageParser)
     {
         $this->jiraHelper = $jiraHelper;
+        $this->revisionMessageParser = $messageParser;
     }
 
     /**
@@ -53,53 +60,36 @@ class LogGenerator extends \Nette\Application\UI\Control
     protected function getTicketInformation($logList)
     {
         $ticketLog = array();
+        $issues = array();
         foreach ($logList as $logLine)
         {
-
-            $data = $this->parseRevisionMessage($logLine['msg']);
-
-            if (!empty($data))
+            $revisionMessage = $this->revisionMessageParser->parseFromString($logLine['msg']);
+            $jiraIssue = $revisionMessage->findJiraIssue($this->jiraHelper);
+            if ($jiraIssue != null)
             {
-                if (isset($data['ticket']) && !empty($data['ticket']))
-                {
-                    $data['jira'] = $this->jiraHelper->getTicketInfo($data['ticket']);
-                }
-
-                // 2 ways of getting the ticket
-                // either by type (RFC|BUG|SUPPORT|OTHER)
-                // or from ALL where all tickets are
-
-                if (isset($data['jira']['typeName']))
-                {
-                    switch ($data['jira']['typeName'])
-                    {
-                        case "Technical task":
-                        case "RFC":
-                            $ticketLog['RFC'][$data['ticket']] = $data;
-                            break;
-                        case "Bug":
-                            $ticketLog['BUG'][$data['ticket']] = $data;
-                            break;
-                        case "Support Request":
-                            $ticketLog['SUPPORT'][$data['ticket']] = $data;
-                            break;
-                        default:
-                            $ticketLog['OTHER'][] = $data;
-                    }
-                    $ticketLog['ALL'][$data['ticket']] = $data;
-                }
-                else if (isset($data['ticket']) && !empty($data['ticket']))
-                {
-                    $ticketLog['OTHER'][$data['ticket']] = $data;
-                    $ticketLog['ALL'][$data['ticket']] = $data;
-                }
-                else
-                {
-                    $ticketLog['OTHER'][] = $data;
-                    $ticketLog['ALL'][] = $data;
-                }
+                $issues[] = $jiraIssue;
             }
+            else
+            {
+                $ticketLog['ALL'][] = $revisionMessage->toArray();
+                $ticketLog['OTHER'][] = $revisionMessage->toArray();
+            }            
         }
+
+        $ticketLog['RFC'] = array_filter($issues, function(IJiraIssue $issue){
+            return $issue->isRFC();
+        });
+        $ticketLog['BUG'] = array_filter($issues, function(IJiraIssue $issue){
+            return $issue->isBug();
+        });
+        $ticketLog['SUPPORT'] = array_filter($issues, function(IJiraIssue $issue){
+            return $issue->isSupportRequest();
+        });
+        $ticketLog['OTHER'] += array_filter($issues, function(IJiraIssue $issue){
+            return $issue->isOther();
+        });
+        $ticketLog['ALL'] += $issues;
+        
 
         return $ticketLog;
     }

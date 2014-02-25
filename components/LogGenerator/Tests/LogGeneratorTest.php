@@ -26,19 +26,19 @@ class SvnHelperTest extends PHPUnit_Framework_TestCase {
 	private function getTicketData($count = 3)
 	{
 		$ticketData = array(
-			1 => array(
+			array(
 				'revision' => 1,
 				'author' => "user01",
 				'date' => "2014-02-07T07:32:03.065437Z",
 				'msg' => "[XXX-73] message"
 			),
-			2 => array(
+			array(
 				'revision' => 2,
 				'author' => "user01",
 				'date' => "2014-02-06T17:30:08.106324Z",
 				'msg' => "Without ticket"
 			),
-			3 => array(
+			array(
 				'revision' => 3,
 				'author' => "user01",
 				'date' => "2014-02-06T17:30:08.106324Z",
@@ -51,7 +51,7 @@ class SvnHelperTest extends PHPUnit_Framework_TestCase {
 
 	public function testParseRevisionMessage_correctMessage()
 	{
-		$generator = new LogGenerator($this->getJiraMock());
+		$generator = new LogGenerator($this->getJiraMock(), new RevisionMessageParser());
 
 		$result = $generator->parseRevisionMessage("[TEST-12] testing\n- lorem ipsum");
 		$this->assertEquals('TEST-12', $result['ticket']);
@@ -59,7 +59,7 @@ class SvnHelperTest extends PHPUnit_Framework_TestCase {
 
 	public function testParseRevisionMessage_wrongMessage()
 	{
-		$generator = new LogGenerator($this->getJiraMock());
+		$generator = new LogGenerator($this->getJiraMock(), new RevisionMessageParser());
 
 		$result = $generator->parseRevisionMessage("testing\n- lorem ipsum");
 		$this->assertEquals('', $result['ticket']);
@@ -71,7 +71,7 @@ class SvnHelperTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testGenerateTicketLog_correctData()
 	{
-		$generator = new LogGenerator($this->getJiraMock());
+		$generator = new LogGenerator($this->getJiraMock(), new RevisionMessageParser());
 		$ticketLog = $generator->generateTicketLog($this->getTicketData(3));
 
 		$this->assertArrayHasKey('ALL', $ticketLog);
@@ -92,7 +92,7 @@ class SvnHelperTest extends PHPUnit_Framework_TestCase {
 			'typeName'     => 'RFC',
 		);
 
-		$generator = new LogGenerator($this->getJiraMock($ticketInfo));
+		$generator = new LogGenerator($this->getJiraMock($ticketInfo), new RevisionMessageParser());
 		$ticketLog = $generator->generateTicketLog($this->getTicketData(1));	// temporary @ till sorting will be implemented
 
 		$this->assertArrayHasKey('ALL', $ticketLog);
@@ -112,7 +112,7 @@ class SvnHelperTest extends PHPUnit_Framework_TestCase {
 			'typeName'     => 'Technical task',
 		);
 
-		$generator = new LogGenerator($this->getJiraMock($ticketInfo));
+		$generator = new LogGenerator($this->getJiraMock($ticketInfo), new RevisionMessageParser());
 		$ticketLog = $generator->generateTicketLog($this->getTicketData(1));	// temporary @ till sorting will be implemented
 
 		$this->assertArrayHasKey('ALL', $ticketLog);
@@ -132,7 +132,7 @@ class SvnHelperTest extends PHPUnit_Framework_TestCase {
 			'typeName'     => 'Support Request',
 		);
 
-		$generator = new LogGenerator($this->getJiraMock($ticketInfo));
+		$generator = new LogGenerator($this->getJiraMock($ticketInfo), new RevisionMessageParser());
 		$ticketLog = $generator->generateTicketLog($this->getTicketData(1));	// temporary @ till sorting will be implemented
 
 		$this->assertArrayHasKey('ALL', $ticketLog);

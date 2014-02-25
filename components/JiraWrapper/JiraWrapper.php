@@ -28,13 +28,10 @@ class JiraWrapper extends \Nette\Object
 	{
 		\Nette\Diagnostics\Debugger::barDump($path, "JIRA Request");		
                 $issue = $this->issuesRepository->findIssueByKey($key);		               
-		\Nette\Diagnostics\Debugger::barDump($issue, "issue {$key}");
+		\Nette\Diagnostics\Debugger::barDump($issue, "issue {$key}");		
+		\Nette\Diagnostics\Debugger::barDump($issue->toArray(), "Jira data for {$key}");
 
-		$finalResult = $issue->toArray();
-
-		\Nette\Diagnostics\Debugger::barDump($finalResult, "Jira data for {$key}");
-
-		return $finalResult;
+		return $issue;
 	}
 }
 

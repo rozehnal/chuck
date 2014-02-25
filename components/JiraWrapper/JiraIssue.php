@@ -30,6 +30,12 @@ class JiraIssue implements IJiraIssue
     
     protected $typeIcon;
     
+    /**
+     *
+     * @var IRevisionMessage
+     */
+    protected $revisionMessage;
+    
     public function __construct($key,
                                 $summary,
                                 $asigneeName,
@@ -60,12 +66,28 @@ class JiraIssue implements IJiraIssue
         $this->typeName = $typeName;
         $this->updated = $updated;
     }
-
+    
     /**
      * 
      * @return mixed[]
      */
     public function toArray()
+    {
+        $result = $this->toIssueArray();
+        if ($this->revisionMessage != null)
+        {
+            $result['jira'] = $result;
+            $result = array_merge($result, $this->revisionMessage->toArray());
+        }
+        
+        return $result;
+    }
+    
+    /**
+     * 
+     * @return mixed[]
+     */
+    protected function toIssueArray()
     {
         return array(
             'key'          => $this->key,
@@ -85,6 +107,31 @@ class JiraIssue implements IJiraIssue
             'typeName'     => $this->typeName,
             'typeIcon'     => $this->typeIcon,
         );
+    }
+    
+    public function attachRevisionMessage(\IRevisionMessage $message)
+    {
+        $this->revisionMessage = $message;
+    }
+
+    public function isBug()
+    {
+        return $this->typeName === 'Bug';
+    }
+
+    public function isRFC()
+    {
+        return in_array($this->typeName, array('RFC', 'Technical task'));
+    }
+
+    public function isSupportRequest()
+    {
+        return $this->typeName === 'Support Request';
+    }
+
+    public function isOther()
+    {
+        return !in_array($this->typeName, array('Support Request', 'Bug', 'RFC', 'Technical task'));
     }
 
 }
