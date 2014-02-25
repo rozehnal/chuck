@@ -3,14 +3,12 @@
 /**
  * @author Michal Svec <michal.svec@dixonsretail.com>
  */
-class DashboardPresenter extends BasePresenter
+class DashboardPresenter extends \DixonsCz\Chuck\Presenters\BasePresenter
 {
 
+    public function renderDefault()
+    {
 
-	public function renderDefault()
-	{
-
-	}
-
+    }
 
 }
