@@ -1,8 +1,8 @@
 <?php
 
 use Nette\Diagnostics\Debugger,
-	Nette\Application\Routers\Route,
-	Nette\Application\Routers\SimpleRouter;
+    Nette\Application\Routers\Route,
+    Nette\Application\Routers\SimpleRouter;
 
 define('ROOT_DIR', realpath(__DIR__ . '/../'));
 define('WWW_DIR', __DIR__);
@@ -20,22 +20,21 @@ $configurator = new Nette\Config\Configurator;
 $configurator->setDebugMode(TRUE);
 $configurator->setTempDirectory(ROOT_DIR . '/temp');
 $configurator->createRobotLoader()
-	->addDirectory(APP_DIR)
-	->addDirectory(ROOT_DIR . '/components')
+    ->addDirectory(APP_DIR)
+    ->addDirectory(ROOT_DIR . '/components')
 //    ->addDirectory(LIBS_DIR)
-	->register();
+    ->register();
 
 // basic environment resolution
 $environment = null;
 
 // specific configuration for Dixons machines
-if(false !== getenv('EM_ENV')) { // on DEV EM_ENV is set
-	$environment = "dixdev";
-}
-else if(false !== strstr($_SERVER["SERVER_SOFTWARE"], "nginx")){ // jenkins server runs on nginx
-	$environment = "jenkins";
-	$configurator->setDebugMode(FALSE);
-	\Nette\Diagnostics\Debugger::enable(Debugger::PRODUCTION);
+if (false !== getenv('EM_ENV')) { // on DEV EM_ENV is set
+    $environment = "dixdev";
+} elseif (false !== strstr($_SERVER["SERVER_SOFTWARE"], "nginx")) { // jenkins server runs on nginx
+    $environment = "jenkins";
+    $configurator->setDebugMode(FALSE);
+    \Nette\Diagnostics\Debugger::enable(Debugger::PRODUCTION);
 }
 
 $configurator->addConfig(ROOT_DIR . '/app/config/config.neon', $environment);

@@ -5,8 +5,8 @@
  */
 class StaticPresenter extends ProjectPresenter
 {
-	public function renderList($project)
-	{
+    public function renderList($project)
+    {
 
-	}
+    }
 }

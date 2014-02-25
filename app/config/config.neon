@@ -6,17 +6,22 @@ common:
         jiraApiPath: http://jira.dixons.co.uk/rest/api/latest/
         jiraPath: http://jira.dixons.co.uk/
         svnUrl: https://svn.dixonsretail.net
+    nette:
+        application:
+            errorPresenter: Error
+            mapping:
+                *: DixonsCz\Chuck\Presenters\*Presenter
 
     services:
         svnHelper:
-            class: SvnHelper
+            class: DixonsCz\Chuck\Svn\Helper
             arguments: [%tempDir%, %svn.credentials%, %projects%]
             run: true
         jiraHelper:
-            class: JiraWrapper
+            class: DixonsCz\Chuck\Jira\Wrapper
             arguments: [%jiraApiPath%, %jira.credentials%]
         logGenerator:
-            class: LogGenerator
+            class: DixonsCz\Chuck\Log\Generator
             arguments: [@jiraHelper]
         mailHelper:
             class: MailHelper
