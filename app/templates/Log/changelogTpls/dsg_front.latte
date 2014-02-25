@@ -1,32 +1,6 @@
-{*****************************
-
-| |*UAT* |*PROD* |
-|*Release Tag* |UAT-1.20.0|PROD-1.20.0|
-|*Rolback Tag* |UAT-1.19.0|PROD-1.19.0|
-|*Release Ticket* |-|[PRODCRM-XXX|http://jira.dixons.co.uk/browse/PRODCRM-XXX] |
-|*Release Dates* |(/) 2013-11-01|(x) {color:#808080}2013-11-01{color} |
-
-|| Type || Priority || Key || Summary || Status || Updated ||
-| !https://jira.e-merchant.com/images/icons/bug.gif|alt=Bug! Bug|P3|[CZDXNS-884|https://jira.e-merchant.com/browse/CZDXNS-884] |[QC 344] CRON? Financial messages are being generated but unacceptable firewall rule set up to allow them.|!https://jira.e-merchant.com/images/icons/status_inprogress.gif! In Progress|2013-11-01|
-| !https://jira.e-merchant.com/images/icons/bug.gif|alt=Bug! Bug|P3|[CZDXNS-883|https://jira.e-merchant.com/browse/CZDXNS-883] |[QC 297] Webcall - unable to send a webcall email from the web front ends|!https://jira.e-merchant.com/images/icons/status_visible.gif! To Code Review|2013-10-24|
-
-{note:icon=false|title=SQL Scripts}
-
-* 1.19.0_update_sanbox.sql
-* 1.19.0_7-PKG_BOCR_EXT_001.pck{note}
-
-{note:icon=false|title=Static Files changes}
-
-* graphx/minisky/logo.jpg
-* graphx/minisky/pic2.jpg
-* js/powerfull_script.js{note}
-
-************************}
-
-
 || || *UAT* || *PROD* || <br>
 |*Release Tag* | {if isset($releaseTag)}  {$releaseTag} | {$releaseTag} {else} | {/if} | <br>
-|*Rolback Tag* | {if isset($rollbackTag)} {$rollbackTag} | {$rollbackTag} {else} | {/if} | <br>
+|*Rollback Tag* | {if isset($rollbackTag)} {$rollbackTag} | {$rollbackTag} {else} | {/if} | <br>
 |*Release Ticket* | | [PRODCRM-XXX|{$jiraPath}browse/PRODCRM-XXX] | <br>
 |*Release Dates*  | (/) {date('Y-m-d')} | (?) {l}color:#808080{r}{date('Y-m-d')}{l}color{r} | <br>
 <br>
