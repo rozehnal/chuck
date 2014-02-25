@@ -41,7 +41,6 @@ class MailHelper
 		$this->type = $type;
 		$this->mail = new Message;
 		$this->mail->setFrom('Chuck Norris <no-reply@dixonsretail.com>')
-		->addTo('petr.jurasek@dixonsretail.com')
 		->setSubject('[Release note] ' . $projectName)
 		->setHtmlBody($this->getTemplate($formatedLog, $projectName, $project));
 
@@ -53,7 +52,7 @@ class MailHelper
 			}
 		}
 
-		return $this->mail->send();
+		return $this->send();
 	}
 
 

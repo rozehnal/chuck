@@ -27,7 +27,7 @@ class TagPresenter extends ProjectPresenter
 				$this->sendReleaseNote($_GET['tag'], $_GET['toReleaseNote']);
 			}
 
-			if (isset($_GET['confluencelog']))
+			if (isset($_GET['confluenceLog']))
 			{
 				$this->generateChangelog($project, $_GET['tag']);
 			}
