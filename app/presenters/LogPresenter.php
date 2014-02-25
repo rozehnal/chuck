@@ -57,7 +57,7 @@ class LogPresenter extends ProjectPresenter
 
         \Nette\Diagnostics\Debugger::barDump($logList, "Log list");
 
-        $logTable = new LogTable($this, 'logTable');
+        $logTable = new \DixonsCz\Chuck\Log\Table($this, 'logTable');
         $logTable->setLog($this->formatLog($logList));
         $logTable->setSelectedLogs($selectedLogs);
 

@@ -1,10 +1,12 @@
 <?php
 
+namespace DixonsCz\Chuck\Svn;
+
 /**
  *
  * @author Michal Svec <michal.svec@dixonsretail.com>
  */
-class SvnHelper
+class Helper
 {
     /**
      * Path to temporary directory
@@ -127,9 +129,9 @@ class SvnHelper
     /**
      * Executes command on remote repository
      *
-     * @param   string  remote command to execute
-     * @param   string  path in repository f.e. /tags/1.0.0
-     * @return string script output
+     * @param   string $command remote command to execute
+     * @param   string $path    path in repository f.e. /tags/1.0.0
+     * @return  string script output
      */
     private function executeRemoteCommand($command, $path = '/trunk')
     {
@@ -146,7 +148,8 @@ class SvnHelper
 
     /**
      * @param  string $tagName
-     * @param  int    $limit
+     * @param  int $limit
+     * @throws \Exception
      * @return array  revision name as a key, revision, author, message and date as a content
      */
     public function getTagLog($tagName, $limit = 30)
@@ -157,7 +160,7 @@ class SvnHelper
         $log = $this->executeRemoteCommand($cmd, "/tags/{$tagName}");
 
         if ($log == "") {
-            throw new Exception("Unable to load svn log!");
+            throw new \Exception("Unable to load svn log!");
         }
 
         return $this->processRawLog($log);
@@ -171,7 +174,7 @@ class SvnHelper
      * @param  int          $limit
      * @return array[array] list of svn commits in array of hashes - keys are revision numbers
      *                             values have keys: revision, author, date, msg
-     * @throws Exception
+     * @throws \Exception
      */
     public function getLog($path = '/trunk', $offset = 0, $limit = 30)
     {
@@ -188,7 +191,7 @@ class SvnHelper
         \Nette\Diagnostics\Debugger::barDump($log, "downloaded log");
 
         if ($log == "") {
-            throw new Exception("Unable to load svn log!");
+            throw new \Exception("Unable to load svn log!");
         }
 
         return $this->processRawLog($log);
@@ -287,8 +290,8 @@ class SvnHelper
     /**
      * Creates new tag from trunk
      *
-     * @param string    tag name
-     * @param string    message to add
+     * @param string $tagName    tag name
+     * @param string $tagMessage message to add
      */
     public function createTag($tagName, $tagMessage)
     {

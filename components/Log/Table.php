@@ -1,10 +1,12 @@
 <?php
 
+namespace DixonsCz\Chuck\Log;
+
 /**
  *
  * @author Michal Svec <michal.svec@dixonsretail.com>
  */
-class LogTable extends \Nette\Application\UI\Control
+class Table extends \Nette\Application\UI\Control
 {
     /**
      * Rendered columns
@@ -24,11 +26,6 @@ class LogTable extends \Nette\Application\UI\Control
      * @var array
      */
     private $log = array();
-
-    /**
-     * @var array
-     */
-    private $disabledColumns = array();
 
     /**
      * Selected logs that should be checked
@@ -61,12 +58,12 @@ class LogTable extends \Nette\Application\UI\Control
      * Disable some columns in final render of table
      *
      * @param  string                   $colName
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function disableColumnRender($colName)
     {
         if (!in_array($colName, $this->availableColumns)) {
-            throw new InvalidArgumentException("{$colName} is not allowed to disable!");
+            throw new \InvalidArgumentException("{$colName} is not allowed to disable!");
         }
 
         if (in_array($colName, $this->selectedColumns)) {
@@ -76,8 +73,9 @@ class LogTable extends \Nette\Application\UI\Control
 
     public function render()
     {
+        /** @var \stdClass $template */
         $template = $this->createTemplate();
-        $template->setFile(__DIR__ . '/LogTable.latte');
+        $template->setFile(__DIR__ . '/Table.latte');
 
         $template->selectedLogs = $this->selectedLogs;
         $template->selectedColumns = $this->selectedColumns;

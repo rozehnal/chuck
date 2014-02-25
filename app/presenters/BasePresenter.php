@@ -1,7 +1,11 @@
 <?php
 
+namespace DixonsCz\Chuck\Presenters;
+
 /**
  * @author Michal Svec <michal.svec@dixonsretail.com>
+ *
+ * @property \stdClass $template
  */
 abstract class BasePresenter extends \Nette\Application\UI\Presenter
 {
@@ -24,6 +28,9 @@ abstract class BasePresenter extends \Nette\Application\UI\Presenter
         return $form;
     }
 
+    /**
+     * @param \Nette\Application\UI\Form $form
+     */
     public function projectFormSubmitted($form)
     {
         $values = $form->getValues();

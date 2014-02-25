@@ -1,14 +1,16 @@
 <?php
 
-class SvnHelperTest extends PHPUnit_Framework_TestCase
+namespace DixonsCz\Chuck\Log\Tests;
+
+class GeneratorTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @param  array       $returnValue
-     * @return JiraWrapper
+     * @return \DixonsCz\Chuck\Jira\Wrapper
      */
     private function getJiraMock($returnValue = array())
     {
-        $mock = $this->getMockBuilder('JiraWrapper')
+        $mock = $this->getMockBuilder('\DixonsCz\Chuck\Jira\Wrapper')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -51,7 +53,7 @@ class SvnHelperTest extends PHPUnit_Framework_TestCase
 
     public function testParseRevisionMessage_correctMessage()
     {
-        $generator = new LogGenerator($this->getJiraMock());
+        $generator = new \DixonsCz\Chuck\Log\Generator($this->getJiraMock());
 
         $result = $generator->parseRevisionMessage("[TEST-12] testing\n- lorem ipsum");
         $this->assertEquals('TEST-12', $result['ticket']);
@@ -59,7 +61,7 @@ class SvnHelperTest extends PHPUnit_Framework_TestCase
 
     public function testParseRevisionMessage_wrongMessage()
     {
-        $generator = new LogGenerator($this->getJiraMock());
+        $generator = new \DixonsCz\Chuck\Log\Generator($this->getJiraMock());
 
         $result = $generator->parseRevisionMessage("testing\n- lorem ipsum");
         $this->assertEquals('', $result['ticket']);
@@ -67,11 +69,11 @@ class SvnHelperTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException PHPUnit_Framework_Error_Notice
+     * @expectedException \PHPUnit_Framework_Error_Notice
      */
     public function testGenerateTicketLog_correctData()
     {
-        $generator = new LogGenerator($this->getJiraMock());
+        $generator = new \DixonsCz\Chuck\Log\Generator($this->getJiraMock());
         $ticketLog = $generator->generateTicketLog($this->getTicketData(3));
 
         $this->assertArrayHasKey('ALL', $ticketLog);
@@ -83,7 +85,7 @@ class SvnHelperTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException PHPUnit_Framework_Error_Notice
+     * @expectedException \PHPUnit_Framework_Error_Notice
      */
     public function testGenerateTicketLog_issueType_RFC()
     {
@@ -92,7 +94,7 @@ class SvnHelperTest extends PHPUnit_Framework_TestCase
             'typeName'     => 'RFC',
         );
 
-        $generator = new LogGenerator($this->getJiraMock($ticketInfo));
+        $generator = new \DixonsCz\Chuck\Log\Generator($this->getJiraMock($ticketInfo));
         $ticketLog = $generator->generateTicketLog($this->getTicketData(1));	// temporary @ till sorting will be implemented
 
         $this->assertArrayHasKey('ALL', $ticketLog);
@@ -103,7 +105,7 @@ class SvnHelperTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException PHPUnit_Framework_Error_Notice
+     * @expectedException \PHPUnit_Framework_Error_Notice
      */
     public function testGenerateTicketLog_issueType_Bug()
     {
@@ -112,7 +114,7 @@ class SvnHelperTest extends PHPUnit_Framework_TestCase
             'typeName'     => 'Technical task',
         );
 
-        $generator = new LogGenerator($this->getJiraMock($ticketInfo));
+        $generator = new \DixonsCz\Chuck\Log\Generator($this->getJiraMock($ticketInfo));
         $ticketLog = $generator->generateTicketLog($this->getTicketData(1));	// temporary @ till sorting will be implemented
 
         $this->assertArrayHasKey('ALL', $ticketLog);
@@ -123,7 +125,7 @@ class SvnHelperTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException PHPUnit_Framework_Error_Notice
+     * @expectedException \PHPUnit_Framework_Error_Notice
      */
     public function testGenerateTicketLog_issueType_Support()
     {
@@ -132,7 +134,7 @@ class SvnHelperTest extends PHPUnit_Framework_TestCase
             'typeName'     => 'Support Request',
         );
 
-        $generator = new LogGenerator($this->getJiraMock($ticketInfo));
+        $generator = new \DixonsCz\Chuck\Log\Generator($this->getJiraMock($ticketInfo));
         $ticketLog = $generator->generateTicketLog($this->getTicketData(1));	// temporary @ till sorting will be implemented
 
         $this->assertArrayHasKey('ALL', $ticketLog);

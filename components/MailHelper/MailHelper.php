@@ -29,19 +29,19 @@ class MailHelper
     /**
      * Return mail
      *
-     * @param  array               $formatedLog Formated log
-     * @param  string              $projectName Project name
-     * @param  string              $project     Project
-     * @param  string              $to          Recepients
-     * @return \Nette\Mail\Message $mail
+     * @param  array  $formattedLog Formated log
+     * @param  string $projectName Project name
+     * @param  string $project Project
+     * @param  string $to Recepients
+     * @param  string $type
      */
-    public function getMail($formatedLog, $projectName, $project, $to, $type = self::TEMPLATE_TABLE)
+    public function getMail($formattedLog, $projectName, $project, $to, $type = self::TEMPLATE_TABLE)
     {
         $this->type = $type;
         $this->mail = new Message;
         $this->mail->setFrom('Chuck Norris <no-reply@dixonsretail.com>')
         ->setSubject('[Release note] ' . $projectName)
-        ->setHtmlBody($this->getTemplate($formatedLog, $projectName, $project));
+        ->setHtmlBody($this->getTemplate($formattedLog, $projectName, $project));
 
         $explodedTo = explode(';', $to);
         foreach ($explodedTo as $email) {
@@ -50,7 +50,7 @@ class MailHelper
             }
         }
 
-        return $this->send();
+        $this->send();
     }
 
     /**
@@ -89,7 +89,6 @@ class MailHelper
      */
     public function send()
     {
-        return $this->mail->send();
+        $this->mail->send();
     }
-
 }

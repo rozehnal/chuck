@@ -48,8 +48,8 @@ class TagPresenter extends ProjectPresenter
         $tagLog = $this->formatLog($tagLog);
 
         // create components
-        $trunkLogTable = new LogTable($this, 'trunkTable');
-        $tagLogTable = new LogTable($this, 'tagTable');
+        $trunkLogTable = new \DixonsCz\Chuck\Log\Table($this, 'trunkTable');
+        $tagLogTable = new \DixonsCz\Chuck\Log\Table($this, 'tagTable');
 
         // set components
         $trunkLogTable->disableColumnRender('date');
@@ -71,8 +71,10 @@ class TagPresenter extends ProjectPresenter
         $form->addTextArea('tagMessage', 'Message');
 
         $cancelButton = $form->addSubmit('cancelButton', 'Cancel')->setAttribute('class', 'btn');
-        $cancelButton->onClick[] = function () {
-            $this->redirect('default');
+
+        $presenter = $this;
+        $cancelButton->onClick[] = function () use ($presenter) {
+            $presenter ->redirect('default');
         };
 
         $form->addSubmit('submitButton', 'Create')->setAttribute('class', 'btn btn-primary');
@@ -81,6 +83,9 @@ class TagPresenter extends ProjectPresenter
         return $form;
     }
 
+    /**
+     * @param \Nette\Application\UI\Form $form
+     */
     public function createTagFormSubmitted($form)
     {
         $values = $form->getValues();
@@ -101,7 +106,7 @@ class TagPresenter extends ProjectPresenter
         $tag1 = $tags[0];
         $tag2 = $tags[1];
 
-        $callback = function ($parent, $tag) {
+        $callback = function (\Nette\Application\UI\Presenter $parent, $tag) {
             $parent->flashMessage("Unknown tag {$tag}");
             $parent->redirect("Tag:list");
         };
@@ -127,7 +132,8 @@ class TagPresenter extends ProjectPresenter
     }
 
     /**
-     * @param array $tags
+     * @param array  $tags
+     * @param string $toReleaseNote
      */
     public function sendReleaseNote($tags, $toReleaseNote)
     {
@@ -136,7 +142,7 @@ class TagPresenter extends ProjectPresenter
 
         list($tag1, $tag2) = $tags;
 
-        $callback = function ($parent, $tag) {
+        $callback = function (\Nette\Application\UI\Presenter $parent, $tag) {
             $parent->flashMessage("Unknown tag {$tag}");
             $parent->redirect("Tag:list");
         };

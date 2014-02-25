@@ -3,7 +3,7 @@
 /**
  * @author Michal Svec <michal.svec@dixonsretail.com>
  */
-abstract class ProjectPresenter extends BasePresenter
+abstract class ProjectPresenter extends \DixonsCz\Chuck\Presenters\BasePresenter
 {
     /** @var @var array */
     protected $projects;
@@ -33,11 +33,11 @@ abstract class ProjectPresenter extends BasePresenter
         $this->template->projectRoot = $this->projectInfo['root'];
         $this->template->projectUrl = $this->projectInfo['url'];
 
-        return parent::startup();
+        parent::startup();
     }
 
     /**
-     * @return LogGenerator
+     * @return \DixonsCz\Chuck\Log\Generator
      */
     protected function getLogGenerator()
     {

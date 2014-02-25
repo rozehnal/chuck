@@ -1,10 +1,12 @@
 <?php
 
+namespace DixonsCz\Chuck\Log;
+
 /**
  *
  * @author Michal Svec <michal.svec@dixonsretail.com>
  */
-class LogGenerator extends \Nette\Application\UI\Control
+class Generator extends \Nette\Application\UI\Control
 {
     const ORDER_PRIORITY  = 'priority';
     const ORDER_ISSUETYPE = 'type';
@@ -12,9 +14,9 @@ class LogGenerator extends \Nette\Application\UI\Control
     private $jiraHelper;
 
     /**
-     * @param JiraWrapper $jiraHelper
+     * @param  $jiraHelper
      */
-    public function __construct(JiraWrapper $jiraHelper)
+    public function __construct(\DixonsCz\Chuck\Jira\Wrapper $jiraHelper)
     {
         $this->jiraHelper = $jiraHelper;
     }

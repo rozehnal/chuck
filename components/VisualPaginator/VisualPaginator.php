@@ -23,14 +23,14 @@
  */
 class VisualPaginator extends \Nette\Application\UI\Control
 {
-    /** @var Paginator */
+    /** @var \Nette\Utils\Paginator */
     private $paginator;
 
     /** @persistent */
     public $page = 1;
 
     /**
-     * @return Nette\Paginator
+     * @return \Nette\Utils\Paginator
      */
     public function getPaginator()
     {

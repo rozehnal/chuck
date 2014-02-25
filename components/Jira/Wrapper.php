@@ -1,11 +1,13 @@
 <?php
 
+namespace DixonsCz\Chuck\Jira;
+
 /**
  * Example: https://jira.example.com/rest/api/latest/issue/EXPVY-325
  *
  * @author Michal Svec <michal.svec@dixonsretail.com>
  */
-class JiraWrapper extends \Nette\Object
+class Wrapper extends \Nette\Object
 {
     /**
      * @var string
@@ -35,7 +37,7 @@ class JiraWrapper extends \Nette\Object
         $jsonData = null;
 
         try {
-            $request = new Kdyby\Curl\Request($path);
+            $request = new \Kdyby\Curl\Request($path);
 
             $request->headers['Authorization'] = 'Basic ' . base64_encode("{$this->credentials['user']}:{$this->credentials['password']}");
             $request->setFollowRedirects(TRUE);
