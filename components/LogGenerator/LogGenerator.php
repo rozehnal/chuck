@@ -76,16 +76,16 @@ class LogGenerator extends \Nette\Application\UI\Control
             }            
         }
 
-        $ticketLog['RFC'] = array_filter($issues, function(IJiraIssue $issue){
+        $ticketLog['RFC'] = array_filter($issues, function(IIssue $issue){
             return $issue->isRFC();
         });
-        $ticketLog['BUG'] = array_filter($issues, function(IJiraIssue $issue){
+        $ticketLog['BUG'] = array_filter($issues, function(IIssue $issue){
             return $issue->isBug();
         });
-        $ticketLog['SUPPORT'] = array_filter($issues, function(IJiraIssue $issue){
+        $ticketLog['SUPPORT'] = array_filter($issues, function(IIssue $issue){
             return $issue->isSupportRequest();
         });
-        $ticketLog['OTHER'] += array_filter($issues, function(IJiraIssue $issue){
+        $ticketLog['OTHER'] += array_filter($issues, function(IIssue $issue){
             return $issue->isOther();
         });
         $ticketLog['ALL'] += $issues;
