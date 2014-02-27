@@ -31,7 +31,7 @@ class Wrapper extends \Nette\Object
 
     public function getTicketInfo($key)
     {
-        \Nette\Diagnostics\Debugger::barDump($path, "JIRA Request");
+        \Nette\Diagnostics\Debugger::barDump($key, "JIRA Request");
         $issue = $this->issuesRepository->findIssueByKey($key);
         \Nette\Diagnostics\Debugger::barDump($issue, "issue {$key}");
         \Nette\Diagnostics\Debugger::barDump($issue->toArray(), "Jira data for {$key}");
