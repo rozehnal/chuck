@@ -4,32 +4,88 @@ namespace DixonsCz\Chuck\Jira;
 
 class Issue implements IIssue
 {
+    /**
+     *
+     * @var string
+     */
     protected $key;
     
+    /**
+     *
+     * @var string
+     */
     protected $summary;
     
-    protected $asigneeName;
+    /**
+     *
+     * @var string
+     */
+    protected $assigneeName;
     
+    /**
+     *
+     * @var string
+     */
     protected $asigneeDisplayName;
     
+    /**
+     *
+     * @var string
+     */
     protected $reporter;
     
+    /**
+     *
+     * @var string
+     */
     protected $created;
     
+    /**
+     *
+     * @var string
+     */
     protected $updated;
     
+    /**
+     *
+     * @var string
+     */
     protected $description;
     
+    /**
+     *
+     * @var string
+     */
     protected $priority;
     
+    /**
+     *
+     * @var string
+     */
     protected $priorityIcon;
     
+    /**
+     *
+     * @var string
+     */
     protected $status;
     
+    /**
+     *
+     * @var string
+     */
     protected $statusIcon;
     
+    /**
+     *
+     * @var string
+     */
     protected $typeName;
     
+    /**
+     *
+     * @var string
+     */
     protected $typeIcon;
     
     /**
@@ -38,9 +94,26 @@ class Issue implements IIssue
      */
     protected $revisionMessage;
     
+    /**
+     * 
+     * @param string $key
+     * @param string $summary
+     * @param string $assigneeName
+     * @param string $asigneeDisplayName
+     * @param string $reporter
+     * @param string $created
+     * @param string $updated
+     * @param string $description
+     * @param string $priority
+     * @param string $priorityIcon
+     * @param string $status
+     * @param string $statusIcon
+     * @param string $stringName
+     * @param string $typeIcon
+     */
     public function __construct($key,
                                 $summary,
-                                $asigneeName,
+                                $assigneeName,
                                 $asigneeDisplayName,
                                 $reporter,
                                 $created,
@@ -54,7 +127,7 @@ class Issue implements IIssue
                                 $typeIcon)
     {
         $this->asigneeDisplayName = $asigneeDisplayName;
-        $this->asigneeName = $asigneeName;
+        $this->assigneeName = $assigneeName;
         $this->created = $created;
         $this->description = $description;
         $this->key = $key;
@@ -95,7 +168,7 @@ class Issue implements IIssue
             'key'          => $this->key,
             'summary'      => $this->summary,
             'assignee' => array(
-                    'name' => $this->asigneeName,
+                    'name' => $this->assigneeName,
                     'displayName' => $this->asigneeDisplayName
             ),
             'reporter'     => $this->reporter,
@@ -111,26 +184,46 @@ class Issue implements IIssue
         );
     }
     
+    /**
+     * 
+     * @param \DixonsCz\Chuck\Svn\IRevisionMessage $message
+     */
     public function attachRevisionMessage(\DixonsCz\Chuck\Svn\IRevisionMessage $message)
     {
         $this->revisionMessage = $message;
     }
 
+    /**
+     * 
+     * @return boolean
+     */
     public function isBug()
     {
         return $this->typeName === 'Bug';
     }
 
+    /**
+     * 
+     * @return boolean
+     */
     public function isRFC()
     {
         return in_array($this->typeName, array('RFC', 'Technical task'));
     }
 
+    /**
+     * 
+     * @return boolean
+     */
     public function isSupportRequest()
     {
         return $this->typeName === 'Support Request';
     }
 
+    /**
+     * 
+     * @return boolean
+     */
     public function isOther()
     {
         return !in_array($this->typeName, array('Support Request', 'Bug', 'RFC', 'Technical task'));

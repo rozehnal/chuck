@@ -27,9 +27,9 @@ class Repository implements IRepository
      * 
      * @param \DixonsCz\Chuck\Jira\Request\IFactory $requestFactory
      * @param \DixonsCz\Chuck\Jira\IClient $client
-     * @param \DixonsCz\Chuck\Jira\Response\ISingleIssue $singleIssueTransformer
+     * @param \DixonsCz\Chuck\Jira\Response\Transformer\SingleIssue $singleIssueTransformer
      */
-    public function __construct(\DixonsCz\Chuck\Jira\Request\IFactory $requestFactory, \DixonsCz\Chuck\Jira\IClient $client, \DixonsCz\Chuck\Jira\Response\ISingleIssue $singleIssueTransformer)
+    public function __construct(\DixonsCz\Chuck\Jira\Request\IFactory $requestFactory, \DixonsCz\Chuck\Jira\IClient $client, \DixonsCz\Chuck\Jira\Response\Transformer\SingleIssue $singleIssueTransformer)
     {
         $this->requestsFactory = $requestFactory;
         $this->client = $client;

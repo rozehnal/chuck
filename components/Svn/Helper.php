@@ -6,7 +6,7 @@ namespace DixonsCz\Chuck\Svn;
  *
  * @author Michal Svec <michal.svec@dixonsretail.com>
  */
-class Helper
+class Helper implements IHelper
 {
     /**
      * Path to temporary directory

@@ -10,31 +10,32 @@ namespace DixonsCz\Chuck\Jira;
 class Wrapper extends \Nette\Object
 {
     /**
-     * @var string
+     * @var Issue\IRepository
      */
-    private $apiUrl;
+    private $issuesRepository;
 
     /**
-     * @var
+     * 
+     * @param \DixonsCz\Chuck\Jira\Issue\IRepository $issuesRepository
      */
-    private $credentials;
-
-    /**
-     * @param string $apiUrl
-     * @param array  $credentials
-     */
-    public function __construct($apiUrl, $credentials)
+    public function __construct(Issue\IRepository $issuesRepository)
     {
-        $this->apiUrl = (string) $apiUrl;
-        $this->credentials = $credentials;
+        $this->issuesRepository = $issuesRepository;
     }
 
+    /**
+     * 
+     * @param string $key
+     * @return IIssue
+     */
     public function getTicketInfo($key)
     {
         \Nette\Diagnostics\Debugger::barDump($key, "JIRA Request");
         $issue = $this->issuesRepository->findIssueByKey($key);
         \Nette\Diagnostics\Debugger::barDump($issue, "issue {$key}");
         \Nette\Diagnostics\Debugger::barDump($issue->toArray(), "Jira data for {$key}");
+        
+        return $issue;
     }
 
 }
