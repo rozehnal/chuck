@@ -32,4 +32,19 @@ class RevisionMessageTest extends \PHPUnit_Framework_TestCase
         $jiraIssue = $revisionMessage->findJiraIssue($jiraWrapper);
         $this->assertEquals($expectedJiraIssue, $jiraIssue);
     }
+    
+    /**
+     * @test
+     */
+    public function findJiraIssue_RevisionMessageWithInvalidTicketNumber_ReturnsNull()
+    {        
+        $jiraWrapper = $this->getMockBuilder('DixonsCz\Chuck\Jira\Wrapper')->disableOriginalConstructor()->getMock();
+        $jiraWrapper->expects($this->any())
+                    ->method('getTicketInfo')
+                    ->with('ticketNumber')
+                    ->will($this->returnValue(null));
+        $revisionMessage = new \DixonsCz\Chuck\Svn\RevisionMessage('ticketNumber', 'message');
+        $jiraIssue = $revisionMessage->findJiraIssue($jiraWrapper);
+        $this->assertNull($jiraIssue);
+    }
 }
