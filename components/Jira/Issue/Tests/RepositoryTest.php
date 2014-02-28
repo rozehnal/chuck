@@ -2,7 +2,7 @@
 
 namespace DixonsCz\Chuck\Jira\Issue\Tests;
 
-class IssuesRepositoryTest extends \PHPUnit_Framework_TestCase
+class RepositoryTest extends \PHPUnit_Framework_TestCase
 {
     
     /**
@@ -22,7 +22,7 @@ class IssuesRepositoryTest extends \PHPUnit_Framework_TestCase
         
         $client = $this->getMock('DixonsCz\Chuck\Jira\IClient');
         
-        $responseTransformer = $this->getMock('DixonsCz\Chuck\Jira\Response\ISingleIssue');        
+        $responseTransformer = $this->getMock('DixonsCz\Chuck\Jira\Response\Transformer\ISingleIssue');        
         $response = $this->getMock('DixonsCz\Chuck\Jira\IResponse');
         $response->expects($this->any())
                 ->method('transform')
