@@ -8,7 +8,7 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
      * @param  array       $returnValue
      * @return \DixonsCz\Chuck\Jira\Wrapper
      */
-    private function getJiraMock($returnValue = array())
+    private function getJiraMock($returnValue = null)
     {
         $mock = $this->getMockBuilder('\DixonsCz\Chuck\Jira\Wrapper')
             ->disableOriginalConstructor()
@@ -89,10 +89,7 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
      */
     public function testGenerateTicketLog_issueType_RFC()
     {
-        $ticketInfo =  array(
-            'key'          => 'XXX-73',
-            'typeName'     => 'RFC',
-        );
+        $ticketInfo = new \DixonsCz\Chuck\Jira\Issue($key = 'XXX-73', null, null, null, null, null, null, null, null, null, null, null, $typeName = 'RFC', null);                
 
         $generator = new \DixonsCz\Chuck\Log\Generator($this->getJiraMock($ticketInfo), new \DixonsCz\Chuck\Svn\RevisionMessage\Parser());
         $ticketLog = $generator->generateTicketLog($this->getTicketData(1));	// temporary @ till sorting will be implemented
@@ -109,10 +106,7 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
      */
     public function testGenerateTicketLog_issueType_Bug()
     {
-        $ticketInfo =  array(
-            'key'          => 'XXX-73',
-            'typeName'     => 'Technical task',
-        );
+        $ticketInfo = new \DixonsCz\Chuck\Jira\Issue($key = 'XXX-73', null, null, null, null, null, null, null, null, null, null, null, $typeName = 'Technical task', null);                        
 
         $generator = new \DixonsCz\Chuck\Log\Generator($this->getJiraMock($ticketInfo), new \DixonsCz\Chuck\Svn\RevisionMessage\Parser());
         $ticketLog = $generator->generateTicketLog($this->getTicketData(1));	// temporary @ till sorting will be implemented
@@ -129,10 +123,7 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
      */
     public function testGenerateTicketLog_issueType_Support()
     {
-        $ticketInfo =  array(
-            'key'          => 'XXX-73',
-            'typeName'     => 'Support Request',
-        );
+        $ticketInfo = new \DixonsCz\Chuck\Jira\Issue($key = 'XXX-73', null, null, null, null, null, null, null, null, null, null, null, $typeName = 'Support Request', null);                                
 
         $generator = new \DixonsCz\Chuck\Log\Generator($this->getJiraMock($ticketInfo), new \DixonsCz\Chuck\Svn\RevisionMessage\Parser());
         $ticketLog = $generator->generateTicketLog($this->getTicketData(1));	// temporary @ till sorting will be implemented
