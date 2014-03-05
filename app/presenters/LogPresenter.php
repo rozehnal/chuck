@@ -11,7 +11,7 @@ class LogPresenter extends ProjectPresenter
      * @param string $project
      */
     public function renderList($project)
-    {        
+    {
         $vp = new VisualPaginator($this, 'vp');
         $paginator = $vp->getPaginator();
         $paginator->itemsPerPage = 30;
