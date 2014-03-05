@@ -6,7 +6,7 @@ interface IResponse
 {
     
     /**
-     * @param IJiraResponseTransformer $transformer
+     * @param Response\ITransformer $transformer
      * @reutrn mixed
      */
     function transform(Response\ITransformer $transformer);

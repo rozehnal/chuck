@@ -31,7 +31,7 @@ interface IIssue
     function isOther();
     
     /**
-     * @param IRevisionMessage $message
+     * @param \DixonsCz\Chuck\Svn\IRevisionMessage $message
      */
     function attachRevisionMessage(\DixonsCz\Chuck\Svn\IRevisionMessage $message);
     

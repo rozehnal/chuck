@@ -21,10 +21,10 @@ class Response implements IResponse
     
     /**
      *     
-     * @param \ITransformer $transformer
+     * @param Response\ITransformer $transformer
      * @return mixed
      */
-    public function transform(\ITransformer $transformer)
+    public function transform(Response\ITransformer $transformer)
     {
         return $transformer->createFromRawData($this->rawData);
     }

@@ -13,12 +13,9 @@ common:
                 *: DixonsCz\Chuck\Presenters\*Presenter
 
     services:
-#        svnHelper:
-#            class: DixonsCz\Chuck\Svn\Helper
-#            arguments: [%tempDir%, %svn.credentials%, %projects%]
-#            run: true
         svnHelper:
-            class: DixonsCz\Chuck\Svn\Tests\Fake\Helper
+            class: DixonsCz\Chuck\Svn\Helper
+            arguments: [%tempDir%, %svn.credentials%, %projects%]
             run: true
         jiraHelper:
             class: DixonsCz\Chuck\Jira\Wrapper            
@@ -27,10 +24,8 @@ common:
             arguments: [@jiraHelper]
         mailHelper:
             class: MailHelper
-#        jiraIssuesRepository:
-#            class: DixonsCz\Chuck\Jira\Issue\Repository
         jiraIssuesRepository:
-            class: DixonsCz\Chuck\Jira\Issue\Tests\Fake\Repository
+            class: DixonsCz\Chuck\Jira\Issue\Repository        
         jiraRequestsFactory:
             class: DixonsCz\Chuck\Jira\Request\Factory
         jiraClient:
@@ -55,7 +50,14 @@ dixdev < common:
         - config.dixdev.neon
 
 development < common:
+    services:
+        svnHelper:
+            class: DixonsCz\Chuck\Svn\FromFile(%svnLogFile%)
+            run: true
+        jiraIssuesRepository:
+            class: DixonsCz\Chuck\Jira\Issue\FromFileRepository(%jiraFile%)
+
     includes:
-        - config.local.neon
+        - config.local.neon    
 
 production < common:

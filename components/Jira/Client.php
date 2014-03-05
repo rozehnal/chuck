@@ -28,7 +28,7 @@ class Client implements IClient
     public function requestPath($path)
     {
         $requestUrl = $this->configuration->getApiUrl() . $path;
-        $request = new Kdyby\Curl\Request($requestUrl);
+        $request = new \sKdyby\Curl\Request($requestUrl);
 
         $request->headers['Authorization'] = 'Basic ' . base64_encode("{$this->configuration->getUsername()}:{$this->configuration->getPassword()}");
         $request->setFollowRedirects(TRUE);

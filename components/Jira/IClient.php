@@ -8,7 +8,7 @@ interface IClient
     /**
      * 
      * @param string $path
-     * @return \JiraResponse
+     * @return Response
      */
     function requestPath($path);
     

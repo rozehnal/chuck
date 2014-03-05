@@ -6,8 +6,8 @@ interface IRequest
 {
     
     /**
-     * @param Client $client
-     * @return IJiraResponsee
+     * @param IClient $client
+     * @return IResponse
      */
     function send(IClient $client);
     

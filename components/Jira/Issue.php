@@ -108,7 +108,7 @@ class Issue implements IIssue
      * @param string $priorityIcon
      * @param string $status
      * @param string $statusIcon
-     * @param string $stringName
+     * @param string $typeName
      * @param string $typeIcon
      */
     public function __construct($key,
