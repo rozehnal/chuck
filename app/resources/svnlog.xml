@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<log>
+<logentry
+   revision="24954">
+<author>svecm01</author>
+<date>2014-02-26T11:27:28.182333Z</date>
+<msg>Added testing of store finder feature from homepage</msg>
+</logentry>
+<logentry
+   revision="24953">
+<author>svecm01</author>
+<date>2014-02-26T11:25:16.809949Z</date>
+<msg>Removed invalid caching - unused method removed</msg>
+</logentry>
+<logentry
+   revision="24952">
+<author>svecm01</author>
+<date>2014-02-26T11:22:35.209391Z</date>
+<msg>Removed invalid caching</msg>
+</logentry>
+<logentry
+   revision="24951">
+<author>ludikm01</author>
+<date>2014-02-26T10:25:37.099201Z</date>
+<msg>Added initial version of behat tests</msg>
+</logentry>
+<logentry
+   revision="24950">
+<author>ludikm01</author>
+<date>2014-02-26T10:22:17.168913Z</date>
+<msg>Added a new folder for testing team</msg>
+</logentry>
+<logentry
+   revision="24940">
+<author>gech01</author>
+<date>2014-02-21T09:17:47.590593Z</date>
+<msg>[DEVFRONT-120] 
+http://jira.dixons.co.uk/browse/DEVFRONT-120
+- IPs for Hemel and India added to INTERNAL_IP_MASK for DEV, TEST, PROD environments</msg>
+</logentry>
+<logentry
+   revision="24932">
+<author>hallof01</author>
+<date>2014-02-14T13:18:24.168949Z</date>
+<msg>[CZDXNS-215] CLONE - Bug - Downloads - RFC 18.4 [Step page] : 'About Downloads at Currys' link is not properly aligned
+
+fixing after long time, since before, integration team was responsible for css, they didnt apply my patch, tested in Firefox 27, Chrome 32, IE 7 &amp; 10 and Opera 12</msg>
+</logentry>
+<logentry
+   revision="24929">
+<author>ctiboj01</author>
+<date>2014-02-13T16:15:39.039703Z</date>
+<msg>[Misal] - change core version to 1.31.0</msg>
+</logentry>
+<logentry
+   revision="24922">
+<author>svecm01</author>
+<date>2014-02-07T07:32:03.065437Z</date>
+<msg>Reverted revision 24915 from trunk:
+[DEVFRONT-73] Password reset functionality works but technical errors are displayed
+- added useToken()
+........
+</msg>
+</logentry>
+<logentry
+   revision="24921">
+<author>svecm01</author>
+<date>2014-02-06T17:30:08.106324Z</date>
+<msg>Fixed website's debugger bar javascript</msg>
+</logentry>
+<logentry
+   revision="24920">
+<author>svecm01</author>
+<date>2014-02-06T16:42:32.422249Z</date>
+<msg>[DEVFRONT-14] store finder on home page doesn't retrieve page with nearest stores
+- removed CSRF token from store finder forms. Linked to DEVCORE-3</msg>
+</logentry>
+<logentry
+   revision="24919">
+<author>pavelj01</author>
+<date>2014-02-05T14:14:41.375886Z</date>
+<msg>GCS - Temporarily setting test env. account to display products on common env.
+</msg>
+</logentry>
+<logentry
+   revision="24918">
+<author>svecm01</author>
+<date>2014-02-05T14:02:40.983929Z</date>
+<msg>[DEVFRONT-83] ErrorExtended removal and set proper debug IP masks
+- fixed error Extended class settings</msg>
+</logentry>
+<logentry
+   revision="24917">
+<author>svecm01</author>
+<date>2014-02-05T13:58:43.609012Z</date>
+<msg>[DEVFRONT-83] ErrorExtended removal and set proper debug IP masks</msg>
+</logentry>
+<logentry
+   revision="24916">
+<author>hallof01</author>
+<date>2014-02-04T16:10:30.513185Z</date>
+<msg>[DEVFRONT-59]  Logo directs to 'www.test....' page  reverting changes, as index fuseaction doesnt exist, its necessary to seo -&gt; rewrite url in bo site management</msg>
+</logentry>
+<logentry
+   revision="24915">
+<author>jurasp01</author>
+<date>2014-02-04T13:18:54.398705Z</date>
+<msg>[DEVFRONT-73] Password reset functionality works but technical errors are displayed
+- added useToken()</msg>
+</logentry>
+<logentry
+   revision="24913">
+<author>svecm01</author>
+<date>2014-02-03T16:43:30.163492Z</date>
+<msg>Initial Behat commit</msg>
+</logentry>
+<logentry
+   revision="24912">
+<author>svecm01</author>
+<date>2014-01-31T14:54:53.370336Z</date>
+<msg>Fixed brain-ws configuration DEV</msg>
+</logentry>
+<logentry
+   revision="24903">
+<author>svecm01</author>
+<date>2014-01-31T13:08:53.020488Z</date>
+<msg>[DEVFRONT-69] Change repository structure - Front office
+- moving static files</msg>
+</logentry>
+<logentry
+   revision="24902">
+<author>svecm01</author>
+<date>2014-01-31T13:06:53.203892Z</date>
+<msg>[DEVFRONT-69] Change repository structure - Front office
+- bin directory moved</msg>
+</logentry>
+<logentry
+   revision="24901">
+<author>svecm01</author>
+<date>2014-01-31T13:03:45.873025Z</date>
+<msg>[DEVFRONT-69] Change repository structure - Front office
+- moving source files</msg>
+</logentry>
+<logentry
+   revision="24900">
+<author>svecm01</author>
+<date>2014-01-31T13:02:54.096954Z</date>
+<msg>[DEVFRONT-69] Change repository structure - Front office
+- new directories</msg>
+</logentry>
+<logentry
+   revision="24898">
+<author>svecm01</author>
+<date>2014-01-30T16:39:10.837951Z</date>
+<msg>Fixed component for wsint brain</msg>
+</logentry>
+<logentry
+   revision="24897">
+<author>hallof01</author>
+<date>2014-01-30T13:44:52.131106Z</date>
+<msg>[DEVFRONT-59]  Logo directs to 'www.test....' page
+fixing logo link action from home to index, just one single word, its no more redirecting to www, its not desirable on test env, by time it will show if its desirable on prod</msg>
+</logentry>
+<logentry
+   revision="24893">
+<author>gech01</author>
+<date>2014-01-28T15:10:29.344240Z</date>
+<msg>[DEVFRONT-63] Enable DEV.TEST websites to work on fo-*.fo.uat.dixons.com hostnames 
+- http://jira.dixons.co.uk/browse/DEVFRONT-63</msg>
+</logentry>
+<logentry
+   revision="24892">
+<author>svecm01</author>
+<date>2014-01-28T14:45:21.258691Z</date>
+<msg>[DEVFRONT-58] GCS does not work, doesn't find any product
+- raised core version to include update for gcsclass</msg>
+</logentry>
+<logentry
+   revision="24889">
+<author>gech01</author>
+<date>2014-01-27T09:08:19.668763Z</date>
+<msg>Temporary setting for GCS. Setting PROD2B account for test.dev.</msg>
+</logentry>
+<logentry
+   revision="24888">
+<author>smidj01</author>
+<date>2014-01-23T16:12:42.895770Z</date>
+<msg>[DEVFRONT-36] - Change gettext configuration on DEV - Front offices</msg>
+</logentry>
+<logentry
+   revision="24887">
+<author>smidj01</author>
+<date>2014-01-23T15:48:42.674668Z</date>
+<msg>[DEVFRONT-36] - Change gettext configuration on DEV - Front offices</msg>
+</logentry>
+<logentry
+   revision="24886">
+<author>smidj01</author>
+<date>2014-01-23T15:42:05.266050Z</date>
+<msg>[DEVFRONT-36] - Change gettext configuration on DEV - Front offices</msg>
+</logentry>
+</log>

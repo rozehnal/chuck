@@ -11,14 +11,27 @@ class Generator extends \Nette\Application\UI\Control
     const ORDER_PRIORITY  = 'priority';
     const ORDER_ISSUETYPE = 'type';
 
+    /**
+     *
+     * @var \DixonsCz\Chuck\Jira\Wrapper
+     */
     private $jiraHelper;
 
     /**
-     * @param  $jiraHelper
+     *
+     * @var \DixonsCz\Chuck\Svn\RevisionMessage\IParser
      */
-    public function __construct(\DixonsCz\Chuck\Jira\Wrapper $jiraHelper)
+    private $revisionMessageParser;
+    
+    /**
+     * 
+     * @param \DixonsCz\Chuck\Jira\Wrapper $jiraHelper
+     * @param \DixonsCz\Chuck\Svn\RevisionMessage\IParser $revisionMessageParser
+     */
+    public function __construct(\DixonsCz\Chuck\Jira\Wrapper $jiraHelper, \DixonsCz\Chuck\Svn\RevisionMessage\IParser $revisionMessageParser)
     {
         $this->jiraHelper = $jiraHelper;
+        $this->revisionMessageParser = $revisionMessageParser;
     }
 
     /**
@@ -44,54 +57,61 @@ class Generator extends \Nette\Application\UI\Control
         return $log;
     }
 
-    /**
+   /**
      * Gets the array with all necessary information about tickets
      *
-     * @param  array $logList
+     * @param  array  $logList
      * @return array
      */
     protected function getTicketInformation($logList)
     {
-        $ticketLog = array();
-        foreach ($logList as $logLine) {
-
-            $data = $this->parseRevisionMessage($logLine['msg']);
-
-            if (!empty($data)) {
-                if (isset($data['ticket']) && !empty($data['ticket'])) {
-                    $data['jira'] = $this->jiraHelper->getTicketInfo($data['ticket']);
-                }
-
-                // 2 ways of getting the ticket
-                // either by type (RFC|BUG|SUPPORT|OTHER)
-                // or from ALL where all tickets are
-
-                if (isset($data['jira']['typeName'])) {
-                    switch ($data['jira']['typeName']) {
-                        case "Technical task":
-                        case "RFC":
-                            $ticketLog['RFC'][$data['ticket']] = $data;
-                            break;
-                        case "Bug":
-                            $ticketLog['BUG'][$data['ticket']] = $data;
-                            break;
-                        case "Support Request":
-                            $ticketLog['SUPPORT'][$data['ticket']] = $data;
-                            break;
-                        default:
-                            $ticketLog['OTHER'][] = $data;
-                    }
-                    $ticketLog['ALL'][$data['ticket']] = $data;
-                } elseif (isset($data['ticket']) && !empty($data['ticket'])) {
-                    $ticketLog['OTHER'][$data['ticket']] = $data;
-                    $ticketLog['ALL'][$data['ticket']] = $data;
-                } else {
-                    $ticketLog['OTHER'][] = $data;
-                    $ticketLog['ALL'][] = $data;
-                }
+        $ticketLog = array(
+            'ALL' => array(),
+            'OTHER' => array(),
+        );
+        $issues = array();
+        foreach ($logList as $logLine)
+        {
+            $revisionMessage = $this->revisionMessageParser->parseFromString($logLine['msg']);
+            $jiraIssue = $revisionMessage->findJiraIssue($this->jiraHelper);
+            if ($jiraIssue != null)
+            {
+                $issues[] = $jiraIssue;
             }
+            else
+            {
+                $ticketLog['ALL'][] = $revisionMessage->toArray();
+                $ticketLog['OTHER'][] = $revisionMessage->toArray();
+            }            
         }
 
+        $rfcIssues = array_filter($issues, function(\DixonsCz\Chuck\Jira\IIssue $issue){
+            return $issue->isRFC();
+        });
+        
+        $bugIssues = array_filter($issues, function(\DixonsCz\Chuck\Jira\IIssue $issue){
+            return $issue->isBug();
+        });
+        
+        $supportIssues = array_filter($issues, function(\DixonsCz\Chuck\Jira\IIssue $issue){
+            return $issue->isSupportRequest();
+        });
+        
+        $otherIssues = array_filter($issues, function(\DixonsCz\Chuck\Jira\IIssue $issue){
+            return $issue->isOther();
+        });        
+        
+        $issueToArrayFormatter = function(\DixonsCz\Chuck\Jira\IIssue $issue)
+        {
+            return $issue->toArray();
+        };
+        
+        $ticketLog['RFC'] = array_map($issueToArrayFormatter, $rfcIssues);
+        $ticketLog['BUG'] = array_map($issueToArrayFormatter, $bugIssues);
+        $ticketLog['SUPPORT'] = array_map($issueToArrayFormatter, $supportIssues);
+        $ticketLog['OTHER'] += array_map($issueToArrayFormatter, $otherIssues);
+        $ticketLog['ALL'] += array_map($issueToArrayFormatter, $issues);
+        
         return $ticketLog;
     }
 

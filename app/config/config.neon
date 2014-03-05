@@ -18,13 +18,25 @@ common:
             arguments: [%tempDir%, %svn.credentials%, %projects%]
             run: true
         jiraHelper:
-            class: DixonsCz\Chuck\Jira\Wrapper
-            arguments: [%jiraApiPath%, %jira.credentials%]
+            class: DixonsCz\Chuck\Jira\Wrapper            
         logGenerator:
             class: DixonsCz\Chuck\Log\Generator
             arguments: [@jiraHelper]
         mailHelper:
             class: MailHelper
+        jiraIssuesRepository:
+            class: DixonsCz\Chuck\Jira\Issue\Repository        
+        jiraRequestsFactory:
+            class: DixonsCz\Chuck\Jira\Request\Factory
+        jiraClient:
+            class: DixonsCz\Chuck\Jira\Client
+        singleIssueTransformer:
+            class: DixonsCz\Chuck\Jira\Response\Transformer\SingleIssue
+        jiraConfiguration:
+            class: DixonsCz\Chuck\Jira\Configuration
+            arguments: [%jiraApiPath%, %jira.credentials%]            
+        revisionMessageParser:
+            class: DixonsCz\Chuck\Svn\RevisionMessage\Parser
 
     includes:
         - secret.neon
@@ -38,7 +50,14 @@ dixdev < common:
         - config.dixdev.neon
 
 development < common:
+    services:
+        svnHelper:
+            class: DixonsCz\Chuck\Svn\FromFile(%svnLogFile%)
+            run: true
+        jiraIssuesRepository:
+            class: DixonsCz\Chuck\Jira\Issue\FromFileRepository(%jiraFile%)
+
     includes:
-        - config.local.neon
+        - config.local.neon    
 
 production < common:
