@@ -7,19 +7,19 @@ interface IConfiguration
     
     /**
      * 
-     * @return strhing
+     * @return string
      */
     function getApiUrl();
     
     /**
      * 
-     * @return strhing
+     * @return string
      */
     function getUsername();
     
     /**
      * 
-     * @return strhing
+     * @return string
      */
     function getPassword();
     
