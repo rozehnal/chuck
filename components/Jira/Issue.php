@@ -9,93 +9,93 @@ class Issue implements IIssue
      * @var string
      */
     protected $key;
-    
+
     /**
      *
      * @var string
      */
     protected $summary;
-    
+
     /**
      *
      * @var string
      */
     protected $assigneeName;
-    
+
     /**
      *
      * @var string
      */
     protected $asigneeDisplayName;
-    
+
     /**
      *
      * @var string
      */
     protected $reporter;
-    
+
     /**
      *
      * @var string
      */
     protected $created;
-    
+
     /**
      *
      * @var string
      */
     protected $updated;
-    
+
     /**
      *
      * @var string
      */
     protected $description;
-    
+
     /**
      *
      * @var string
      */
     protected $priority;
-    
+
     /**
      *
      * @var string
      */
     protected $priorityIcon;
-    
+
     /**
      *
      * @var string
      */
     protected $status;
-    
+
     /**
      *
      * @var string
      */
     protected $statusIcon;
-    
+
     /**
      *
      * @var string
      */
     protected $typeName;
-    
+
     /**
      *
      * @var string
      */
     protected $typeIcon;
-    
+
     /**
      *
      * @var IRevisionMessage
      */
     protected $revisionMessage;
-    
+
     /**
-     * 
+     *
      * @param string $key
      * @param string $summary
      * @param string $assigneeName
@@ -111,21 +111,22 @@ class Issue implements IIssue
      * @param string $typeName
      * @param string $typeIcon
      */
-    public function __construct($key,
-                                $summary,
-                                $assigneeName,
-                                $asigneeDisplayName,
-                                $reporter,
-                                $created,
-                                $updated,
-                                $description,
-                                $priority,
-                                $priorityIcon,
-                                $status,
-                                $statusIcon,
-                                $typeName,
-                                $typeIcon)
-    {
+    public function __construct(
+        $key,
+        $summary,
+        $assigneeName,
+        $asigneeDisplayName,
+        $reporter,
+        $created,
+        $updated,
+        $description,
+        $priority,
+        $priorityIcon,
+        $status,
+        $statusIcon,
+        $typeName,
+        $typeIcon
+    ) {
         $this->asigneeDisplayName = $asigneeDisplayName;
         $this->assigneeName = $assigneeName;
         $this->created = $created;
@@ -141,51 +142,50 @@ class Issue implements IIssue
         $this->typeName = $typeName;
         $this->updated = $updated;
     }
-    
+
     /**
-     * 
+     *
      * @return mixed[]
      */
     public function toArray()
     {
         $result = $this->toIssueArray();
-        if ($this->revisionMessage != null)
-        {
+        if ($this->revisionMessage != null) {
             $result['jira'] = $result;
             $result = array_merge($result, $this->revisionMessage->toArray());
         }
-        
+
         return $result;
     }
-    
+
     /**
-     * 
+     *
      * @return mixed[]
      */
     protected function toIssueArray()
     {
         return array(
-            'key'          => $this->key,
-            'summary'      => $this->summary,
+            'key' => $this->key,
+            'summary' => $this->summary,
             'assignee' => array(
-                    'name' => $this->assigneeName,
-                    'displayName' => $this->asigneeDisplayName
+                'name' => $this->assigneeName,
+                'displayName' => $this->asigneeDisplayName
             ),
-            'reporter'     => $this->reporter,
-            'created'      => $this->created,
-            'updated'      => $this->updated,
-            'description'  => $this->description,
-            'priority'     => $this->priority,
+            'reporter' => $this->reporter,
+            'created' => $this->created,
+            'updated' => $this->updated,
+            'description' => $this->description,
+            'priority' => $this->priority,
             'priorityIcon' => $this->priorityIcon,
-            'status'       => $this->status,
-            'statusIcon'   => $this->statusIcon,
-            'typeName'     => $this->typeName,
-            'typeIcon'     => $this->typeIcon,
+            'status' => $this->status,
+            'statusIcon' => $this->statusIcon,
+            'typeName' => $this->typeName,
+            'typeIcon' => $this->typeIcon,
         );
     }
-    
+
     /**
-     * 
+     *
      * @param \DixonsCz\Chuck\Svn\IRevisionMessage $message
      */
     public function attachRevisionMessage(\DixonsCz\Chuck\Svn\IRevisionMessage $message)
@@ -194,7 +194,7 @@ class Issue implements IIssue
     }
 
     /**
-     * 
+     *
      * @return boolean
      */
     public function isBug()
@@ -203,7 +203,7 @@ class Issue implements IIssue
     }
 
     /**
-     * 
+     *
      * @return boolean
      */
     public function isRFC()
@@ -212,7 +212,7 @@ class Issue implements IIssue
     }
 
     /**
-     * 
+     *
      * @return boolean
      */
     public function isSupportRequest()
@@ -221,7 +221,7 @@ class Issue implements IIssue
     }
 
     /**
-     * 
+     *
      * @return boolean
      */
     public function isOther()
