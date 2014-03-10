@@ -8,5 +8,11 @@ The best tool since MacGyver
 Installation
 ------------
 
+Requirements are described in [composer.json](https://github.com/DixonsCz/chuck/blob/master/composer.json).
+
 1. Set up paths to SVN repositories (see config.local.neon)
 2. Copy secret.dev.neon to secret.neon
+
+Coding standard
+---------------
+We follow [PSR coding standards](https://github.com/php-fig/fig-standards/tree/master/accepted).
