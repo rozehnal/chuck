@@ -68,42 +68,44 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    /**
-     * @expectedException \PHPUnit_Framework_Error_Notice
-     */
-    public function testGenerateTicketLog_correctData()
+    public function testGenerateTicketLog_withoutJiraResponse_correctData_withoutJiraResponse()
     {
         $generator = new \DixonsCz\Chuck\Log\Generator($this->getJiraMock(), new \DixonsCz\Chuck\Svn\RevisionMessage\Parser());
         $ticketLog = $generator->generateTicketLog($this->getTicketData(3));
 
         $this->assertArrayHasKey('ALL', $ticketLog);
         $this->assertArrayHasKey('OTHER', $ticketLog);
-        $this->assertArrayHasKey('XXX-73', $ticketLog['OTHER']);
-        $this->assertCount(2, $ticketLog);
         $this->assertCount(3, $ticketLog['ALL']);
         $this->assertCount(3, $ticketLog['OTHER']);
     }
 
-    /**
-     * @expectedException \PHPUnit_Framework_Error_Notice
-     */
+
+    public function testGenerateTicketLog_withJiraTicket_returnsCorrectArray()
+    {
+        $ticketInfo = new \DixonsCz\Chuck\Jira\Issue($key = 'DEVGW-28', null, null, null, null, null, null, null, null, null, null, null, $typeName = 'RFC', null);
+        $generator = new \DixonsCz\Chuck\Log\Generator($this->getJiraMock($ticketInfo), new \DixonsCz\Chuck\Svn\RevisionMessage\Parser());
+        $ticketLog = $generator->generateTicketLog($this->getTicketData(3));
+
+        $this->assertCount(5, $ticketLog);
+        $this->assertCount(1, $ticketLog['RFC']);
+        $this->assertCount(0, $ticketLog['SUPPORT']);
+        $this->assertCount(0, $ticketLog['BUG']);
+        $this->assertCount(2, $ticketLog['OTHER']);
+        $this->assertCount(3, $ticketLog['ALL']);
+    }
+
     public function testGenerateTicketLog_issueType_RFC()
     {
-        $ticketInfo = new \DixonsCz\Chuck\Jira\Issue($key = 'XXX-73', null, null, null, null, null, null, null, null, null, null, null, $typeName = 'RFC', null);                
+        $ticketInfo = new \DixonsCz\Chuck\Jira\Issue($key = 'XXX-73', null, null, null, null, null, null, null, null, null, null, null, $typeName = 'RFC', null);
 
         $generator = new \DixonsCz\Chuck\Log\Generator($this->getJiraMock($ticketInfo), new \DixonsCz\Chuck\Svn\RevisionMessage\Parser());
         $ticketLog = $generator->generateTicketLog($this->getTicketData(1));	// temporary @ till sorting will be implemented
 
         $this->assertArrayHasKey('ALL', $ticketLog);
         $this->assertArrayHasKey('RFC', $ticketLog);
-        $this->assertArrayHasKey('XXX-73', $ticketLog['RFC']);
-        $this->assertCount(2, $ticketLog);
         $this->assertCount(1, $ticketLog['RFC']);
     }
 
-    /**
-     * @expectedException \PHPUnit_Framework_Error_Notice
-     */
     public function testGenerateTicketLog_issueType_Bug()
     {
         $ticketInfo = new \DixonsCz\Chuck\Jira\Issue($key = 'XXX-73', null, null, null, null, null, null, null, null, null, null, null, $typeName = 'Technical task', null);                        
@@ -113,14 +115,9 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertArrayHasKey('ALL', $ticketLog);
         $this->assertArrayHasKey('RFC', $ticketLog);
-        $this->assertArrayHasKey('XXX-73', $ticketLog['RFC']);
-        $this->assertCount(2, $ticketLog);
         $this->assertCount(1, $ticketLog['RFC']);
     }
 
-    /**
-     * @expectedException \PHPUnit_Framework_Error_Notice
-     */
     public function testGenerateTicketLog_issueType_Support()
     {
         $ticketInfo = new \DixonsCz\Chuck\Jira\Issue($key = 'XXX-73', null, null, null, null, null, null, null, null, null, null, null, $typeName = 'Support Request', null);                                
@@ -130,8 +127,6 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertArrayHasKey('ALL', $ticketLog);
         $this->assertArrayHasKey('SUPPORT', $ticketLog);
-        $this->assertArrayHasKey('XXX-73', $ticketLog['SUPPORT']);
-        $this->assertCount(2, $ticketLog);
         $this->assertCount(1, $ticketLog['SUPPORT']);
     }
 }

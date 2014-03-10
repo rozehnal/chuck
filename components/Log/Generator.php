@@ -82,7 +82,7 @@ class Generator extends \Nette\Application\UI\Control
             {
                 $ticketLog['ALL'][] = $revisionMessage->toArray();
                 $ticketLog['OTHER'][] = $revisionMessage->toArray();
-            }            
+            }
         }
 
         $rfcIssues = array_filter($issues, function(\DixonsCz\Chuck\Jira\IIssue $issue){
@@ -109,9 +109,9 @@ class Generator extends \Nette\Application\UI\Control
         $ticketLog['RFC'] = array_map($issueToArrayFormatter, $rfcIssues);
         $ticketLog['BUG'] = array_map($issueToArrayFormatter, $bugIssues);
         $ticketLog['SUPPORT'] = array_map($issueToArrayFormatter, $supportIssues);
-        $ticketLog['OTHER'] += array_map($issueToArrayFormatter, $otherIssues);
-        $ticketLog['ALL'] += array_map($issueToArrayFormatter, $issues);
-        
+        $ticketLog['OTHER'] = array_merge($ticketLog['OTHER'], array_map($issueToArrayFormatter, $otherIssues));
+        $ticketLog['ALL'] = array_merge($ticketLog['ALL'], array_map($issueToArrayFormatter, $issues));
+
         return $ticketLog;
     }
 
@@ -123,8 +123,6 @@ class Generator extends \Nette\Application\UI\Control
      */
     private function orderByIssueType($issues)
     {
-        trigger_error("Sorting not implemented!", E_USER_NOTICE);
-
         return $issues;
     }
 
@@ -136,8 +134,6 @@ class Generator extends \Nette\Application\UI\Control
      */
     private function orderByPriority($issues)
     {
-        trigger_error("Sorting not implemented!", E_USER_NOTICE);
-
         return $issues;
     }
 
