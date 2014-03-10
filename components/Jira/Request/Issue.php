@@ -15,10 +15,10 @@ class Issue implements IRequest
     
     /**
      * 
-     * @param \IClient $client
-     * @return IResponse
+     * @param \DixonsCz\Chuck\Jira\IClient $client
+     * @return \DixonsCz\Chuck\Jira\IResponse
      */
-    public function send(\IClient $client)
+    public function send(\DixonsCz\Chuck\Jira\IClient $client)
     {
         return $client->requestPath($this->path . $this->key);
     }

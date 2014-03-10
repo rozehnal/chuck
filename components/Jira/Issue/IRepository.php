@@ -8,7 +8,7 @@ interface IRepository
     /**
      * 
      * @param string $key
-     * @return Issue
+     * @return \DixonsCz\Chuck\Jira\IIssue
      */
     function findIssueByKey($key);
     
