@@ -2,6 +2,8 @@
 
 namespace DixonsCz\Chuck\Svn;
 
+use Psr\Log\LoggerInterface;
+
 /**
  *
  * @author Michal Svec <michal.svec@dixonsretail.com>
@@ -49,9 +51,15 @@ class Helper implements IHelper
      */
     private $credentials;
 
-    public function __construct($tempDir, $credentials = null, $projects = array())
+    /**
+     * @var LoggerInterface
+     */
+    private $loger;
+
+    public function __construct($tempDir, LoggerInterface $logger, $credentials = null, $projects = array())
     {
         //TODO: check if exists
+        $this->logger = $logger;
         $this->tempDir = $tempDir;
         $this->projects = $projects;
         $this->credentials = $credentials;
@@ -121,8 +129,9 @@ class Helper implements IHelper
     {
         $cmd = $this->getSvnExecutable() . " --non-interactive --trust-server-cert " . $command . ' ' . ($xml == true ? '--xml' : '') . ' "' . $this->projects[$this->project]['repositoryPath'] . '"';
         $result = $this->executeCommand($cmd);
-        \Nette\Diagnostics\Debugger::barDump($cmd, "ProjectCommand");
-//		\Nette\Diagnostics\Debugger::barDump($result, "Result");
+        $this->logger->info('Project command: ' . $cmd);
+//        $this->logger->info('Result: ' . $result);
+
         return $result;
     }
 
@@ -141,7 +150,7 @@ class Helper implements IHelper
         }
 
         $cmd = $this->getSvnExecutable() . $command . ' --xml "' . $this->remoteUrl . $path . '"';
-        \Nette\Diagnostics\Debugger::barDump($cmd, "RemoteCommand");
+        $this->logger->info('Remote command:' . $cmd);
 
         return $this->executeCommand($cmd);
     }
@@ -154,7 +163,7 @@ class Helper implements IHelper
      */
     public function getTagLog($tagName, $limit = 30)
     {
-        \Nette\Diagnostics\Debugger::barDump("log for tag: $tagName", "getTagLog");
+        $this->logger->info("getTagLog: log for tag: $tagName");
 
         $cmd = "log --limit {$limit}";
         $log = $this->executeRemoteCommand($cmd, "/tags/{$tagName}");
@@ -186,9 +195,10 @@ class Helper implements IHelper
         }
 
         $cmd = "log -r {$this->commitList[$offset]}:{$this->commitList[$last]} --limit {$limit}";
-        \Nette\Diagnostics\Debugger::barDump($cmd, "getLog");
+        $this->logger->info('getLog: ' . $cmd);
+
         $log = $this->executeProjectCommand($cmd, $path);
-        \Nette\Diagnostics\Debugger::barDump($log, "downloaded log");
+        $this->logger->info('downloaded log: ' . $log);
 
         if ($log == "") {
             throw new \Exception("Unable to load svn log!");

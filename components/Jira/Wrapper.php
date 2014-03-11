@@ -2,6 +2,8 @@
 
 namespace DixonsCz\Chuck\Jira;
 
+use Psr\Log\LoggerInterface;
+
 /**
  * Example: https://jira.example.com/rest/api/latest/issue/EXPVY-325
  *
@@ -15,26 +17,32 @@ class Wrapper extends \Nette\Object
     private $issuesRepository;
 
     /**
-     * 
-     * @param \DixonsCz\Chuck\Jira\Issue\IRepository $issuesRepository
+     * @var LoggerInterface
      */
-    public function __construct(Issue\IRepository $issuesRepository)
+    private $logger;
+
+    /**
+     *
+     * @param \DixonsCz\Chuck\Jira\Issue\IRepository $issuesRepository
+     * @param LoggerInterface $logger
+     */
+    public function __construct(Issue\IRepository $issuesRepository, LoggerInterface $logger)
     {
         $this->issuesRepository = $issuesRepository;
+        $this->logger = $logger;
     }
 
     /**
-     * 
+     *
      * @param string $key
      * @return IIssue
      */
     public function getTicketInfo($key)
     {
-        \Nette\Diagnostics\Debugger::barDump($key, "JIRA Request");
+        $this->logger->info('JIRA Request: ' . $key);
         $issue = $this->issuesRepository->findIssueByKey($key);
-        \Nette\Diagnostics\Debugger::barDump($issue, "issue {$key}");
-        \Nette\Diagnostics\Debugger::barDump($issue->toArray(), "Jira data for {$key}");
-        
+        $this->logger->info($issue);
+
         return $issue;
     }
 
