@@ -2,8 +2,9 @@ Chuck
 =====
 
 The best tool since MacGyver
-[![Build Status](https://travis-ci.org/DixonsCz/chuck.png?branch=master)](https://travis-ci.org/DixonsCz/chuck)
 
+[![Build Status](https://travis-ci.org/DixonsCz/chuck.png?branch=master)](https://travis-ci.org/DixonsCz/chuck)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/DixonsCz/chuck/badges/quality-score.png?s=0c2c27e30dd4ac104dcbfe355008ebeff48a87e2)](https://scrutinizer-ci.com/g/DixonsCz/chuck/)
 
 Installation
 ------------
