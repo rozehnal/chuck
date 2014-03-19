@@ -2,8 +2,9 @@
 	"name": "m.svec/chuck",
 	"require": {
 		"nette/nette": "2.0.*",
-		"kdyby/curl": "@stable"
-	},
+		"kdyby/curl": "@stable",
+        "monolog/monolog": "@stable"
+    },
 	"require-dev": {
 		"behat/behat": "@stable",
 		"behat/mink-extension": "@stable",
